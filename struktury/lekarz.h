@@ -16,6 +16,8 @@ struct Lekarz {
 };
 
 void dodajLekarzaNaKoniec(struct Lekarz **glowny, char imie[], char nazwisko[], char pesel[], char adres[], char tel[], unsigned int waga, unsigned int wzrost, char OddzialNFZ[]);
+void usunPierwszego(struct Lekarz **glowny);
+void usunLekarza(struct Lekarz **glowny, char id[]);
 void wyswietlLekarzy(struct Lekarz *glowny);
 int liczbaLekarzy(struct Lekarz *glowny);
 char * generujIDLekarz(struct Lekarz *glowny);

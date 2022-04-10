@@ -20,6 +20,16 @@ int main() {
     dodajLekarzaNaKoniec(&glowny, "Wikary", "Marcepan", "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
 
     wyswietlLekarzy(glowny);
+
+    usunPierwszego(glowny);
+    //usunLekarza(&glowny, "L000");
+
+    wyswietlLekarzy(&glowny);
+
+    printf("\nLiczba lekarzy: %d\n", liczbaLekarzy(glowny));
     
+    dodajLekarzaNaKoniec(&glowny, "Maciej", "Kalwin", "0123456789", "Kielce, ul.Jana Pawla II 14", "112233445", 78, 178, "NFZ nr 133");
+
+    printf("\nLiczba lekarzy: %d\n", liczbaLekarzy(glowny));
     return 0;
 }

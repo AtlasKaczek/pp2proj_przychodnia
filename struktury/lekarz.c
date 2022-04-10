@@ -39,6 +39,41 @@ void dodajLekarzaNaKoniec(struct Lekarz **glowny, char imie[], char nazwisko[], 
     nowyLekarz->poprzedni = temp;
 }
 
+void usunPierwszego(struct Lekarz **glowny) {
+    
+	struct Lekarz *tmp = (*glowny)->nastepny;
+    if (tmp != NULL)
+    {
+        tmp->poprzedni = NULL;
+    }
+    free(glowny);
+}
+
+void usunLekarza(struct Lekarz **glowny, char id[]) {
+    
+
+    if (strcmp( id, "L000") == 0)
+    {
+        usunPierwszego(glowny);
+    } else {
+        struct Lekarz *ten = *glowny;
+        struct Lekarz *tmp;
+
+        while (ten->nastepny != NULL && strcmp( ten->nastepny->id, id) != 0) {
+            ten = ten->nastepny;
+        }
+        
+        tmp=ten->nastepny;
+        ten->nastepny = tmp->nastepny;
+        tmp->nastepny->poprzedni = ten;
+        free(tmp);
+        printf("Pomyslnie usunieto lekarza.\n\n");
+    }
+    
+    
+    //printf("Nie ma takiego lekarza!\n\n");
+}
+
 void wyswietlLekarzy(struct Lekarz *glowny) {
     
     printf("\n");
@@ -91,19 +126,9 @@ int sprawdzID(struct Lekarz *glowny, char id[5]) {
     int czastkowa = 0;
     struct Lekarz *ten = glowny;
     do {
-        for (int i = 1; i < 4; i++)
-        {
-            if (ten->id[i] == id[i])
-            {
-                czastkowa++;
-            }
-            
-        }
-        if (czastkowa == 3)
-        {
+        if( strcmp(ten->id, id) == 0) {
             return 1;
         }
-        czastkowa = 0;
         ten = ten->nastepny;
     } while (ten != NULL);
     
