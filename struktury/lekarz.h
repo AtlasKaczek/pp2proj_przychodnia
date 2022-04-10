@@ -1,6 +1,6 @@
 // Lista Lekarzy i odpowiednie funkcje
 struct Lekarz {
-    unsigned int id;
+    char id[5];
     char imie[20];
     char nazwisko[20];
     char pesel[10];
@@ -15,5 +15,8 @@ struct Lekarz {
     struct Lekarz* poprzedni;
 };
 
-void dodajLekarzaNaKoniec(struct Lekarz **glowny, unsigned int id, char imie[], char nazwisko[], char pesel[], char adres[], char email[], char tel[], unsigned int waga, unsigned int wzrost, char OddzialNFZ[]);
+void dodajLekarzaNaKoniec(struct Lekarz **glowny, char imie[], char nazwisko[], char pesel[], char adres[], char tel[], unsigned int waga, unsigned int wzrost, char OddzialNFZ[]);
 void wyswietlLekarzy(struct Lekarz *glowny);
+int liczbaLekarzy(struct Lekarz *glowny);
+char * generujIDLekarz(struct Lekarz *glowny);
+int sprawdzID(struct Lekarz *glowny, char id[5]);
