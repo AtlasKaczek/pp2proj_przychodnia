@@ -10,7 +10,7 @@ int main() {
     glowny = NULL;
 
     wyswietlLekarzy(glowny);
-
+    /*
     dodajLekarzaNaKoniec(&glowny, "Adam", "Monetka", "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
     dodajLekarzaNaKoniec(&glowny, "Radoslaw", "Koscielec", "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
     dodajLekarzaNaKoniec(&glowny, "Mariusz", "Pudzianowski", "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
@@ -21,15 +21,21 @@ int main() {
 
     wyswietlLekarzy(glowny);
 
-    usunPierwszego(glowny);
-    //usunLekarza(&glowny, "L000");
+    usunLekarza(&glowny, "L000");
 
-    wyswietlLekarzy(&glowny);
-
-    printf("\nLiczba lekarzy: %d\n", liczbaLekarzy(glowny));
+    wyswietlLekarzy(glowny);
     
     dodajLekarzaNaKoniec(&glowny, "Maciej", "Kalwin", "0123456789", "Kielce, ul.Jana Pawla II 14", "112233445", 78, 178, "NFZ nr 133");
 
-    printf("\nLiczba lekarzy: %d\n", liczbaLekarzy(glowny));
+    wyswietlLekarzy(glowny);
+    */
+    FILE *plik;
+    
+    //ZapiszLekarzy(plik, glowny);
+
+    glowny = OdczytajLekarzy(plik, &glowny);
+
+    wyswietlLekarzy(glowny);
+
     return 0;
 }
