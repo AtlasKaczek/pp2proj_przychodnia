@@ -1,5 +1,5 @@
 # Pliki ignorowane przez git
 a.out
 main.out
-dane/*.txt
+dane/**
 .vscode
