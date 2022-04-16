@@ -8,7 +8,7 @@ int main() {
     glowny = (struct Lekarz *)malloc(sizeof(struct Lekarz));
 
     glowny = NULL;
-
+    /*
     wyswietlLekarzy(glowny);
     
     dodajLekarzaNaKoniec(&glowny, "Adam", "Monetka", 12, 6, 1986, "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
@@ -16,7 +16,7 @@ int main() {
     dodajLekarzaNaKoniec(&glowny, "Mariusz", "Pudzianowski", 27, 3, 1978, "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
 
     wyswietlLekarzy(glowny);
-    /*
+    
     dodajLekarzaNaKoniec(&glowny, "Wikary", "Marcepan", "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
 
     wyswietlLekarzy(glowny);
@@ -31,13 +31,16 @@ int main() {
     */
     FILE *plik;
     
-    ZapiszLekarzy(plik, glowny);
+    //ZapiszLekarzy(plik, glowny);
 
-    //OdczytajLekarzy(plik, &glowny);
+    OdczytajLekarzy(plik, &glowny);
 
     wyswietlLekarzy(glowny);
 
-    //usunLekarza(&glowny, "L000");
+    //usunOstatniego(&glowny);
+    edytujLekarzaMenu(&glowny);
+
+    wyswietlLekarzy(glowny);
 
     return 0;
 }

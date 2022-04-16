@@ -29,11 +29,15 @@ struct Lekarz {
 
 void dodajLekarzaNaKoniec(struct Lekarz **glowny, char imie[], char nazwisko[], int dzien, int miesiac, int rok, char pesel[], char adres[], char tel[], unsigned int waga, unsigned int wzrost, char OddzialNFZ[]);
 void usunPierwszego(struct Lekarz **glowny);
+void usunOstatniego(struct Lekarz **glowny);
 void usunLekarza(struct Lekarz **glowny, char id[]);
+void edytujLekarzaMenu(struct Lekarz **glowny);
+void edytujLekarza(struct Lekarz **glowny, int opcja);
 
 // Funkcje Dodatkowe Dla Listy Lekarzy
 
 void wyswietlLekarzy(struct Lekarz *glowny);
+void wyswietlLekarza(struct Lekarz *glowny);
 int liczbaLekarzy(struct Lekarz *glowny);
 char * generujIDLekarz(struct Lekarz *glowny);
 int sprawdzID(struct Lekarz *glowny, char id[5]);

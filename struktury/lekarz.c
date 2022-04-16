@@ -52,8 +52,26 @@ void usunPierwszego(struct Lekarz **glowny) {
     free(tmp);
 }
 
-void usunLekarza(struct Lekarz **glowny, char id[]) {
+void usunOstatniego(struct Lekarz **glowny) {
+    struct Lekarz *tmp;
+    if ((*glowny) == NULL)
+    {
+        return;
+    } else if ((*glowny)->nastepny==NULL) {
+        (*glowny)=NULL;
+        free(*glowny);
+    } else {
+        tmp=*glowny;
+        while (tmp->nastepny != NULL) {
+            tmp=tmp->nastepny;
+        }
+        tmp->poprzedni->nastepny=NULL;
+        free(tmp);
+    }
+}
 
+void usunLekarza(struct Lekarz **glowny, char id[]) {
+    
     if (strcmp( id, (*glowny)->id) == 0)
     {
         usunPierwszego(glowny);
@@ -64,14 +82,151 @@ void usunLekarza(struct Lekarz **glowny, char id[]) {
         while (node->nastepny != NULL && strcmp( node->nastepny->id, id) != 0) {
             node = node->nastepny;
         }
-        
-        tmp=node->nastepny;
-        node->nastepny = tmp->nastepny;
-        tmp->nastepny->poprzedni = node;
-        free(tmp);
+        if (strcmp( node->nastepny->id, id) == 0)
+        {
+            usunOstatniego(glowny);
+        } else {
+            tmp=node->nastepny;
+            node->nastepny = tmp->nastepny;
+            tmp->nastepny->poprzedni = node;
+            free(tmp);
+        }
         printf("Pomyslnie usunieto lekarza.\n\n");
     }
     
+}
+
+void edytujLekarzaMenu(struct Lekarz **glowny) {
+    
+    char id[5];
+    printf("\nWybierz lekarza, ktorego chcesz edytowac (id): ");
+    scanf("%s", id);
+
+    int opcja = -1;
+
+    if (strcmp( id, (*glowny)->id) == 0)
+    {
+        while (opcja != 0)
+        {
+            wyswietlLekarza(*glowny);
+            printf("0. Zatwierdz");
+            printf("Wybierz pole do edycji: ");
+            scanf(" %d", &opcja);
+            edytujLekarza(glowny, opcja);
+        }
+        
+    } else {
+        struct Lekarz *node = *glowny;
+
+        while (node->nastepny != NULL && strcmp( node->nastepny->id, id) != 0) {
+            node = node->nastepny;
+        }
+        
+        while (opcja != 0)
+        {
+            wyswietlLekarza(node->nastepny);
+            printf("0. Zatwierdz\n\n");
+            printf("Wybierz pole do edycji: ");
+            scanf(" %d", &opcja);
+            edytujLekarza(&(node->nastepny), opcja);
+        }
+    }
+    
+    printf("Pomyslnie edytowano lekarza .\n");
+}
+
+void edytujLekarza(struct Lekarz **glowny, int opcja) {
+    
+    switch (opcja)
+    {
+    case 1:
+        printf("ID: %s -> ", (*glowny)->id);
+        char id[5];
+        scanf("%s", id);
+        strcpy((*glowny)->id, id);
+        break;
+    
+    case 2:
+        printf("Imie: %s -> ", (*glowny)->imie);
+        char imie[20];
+        scanf("%s", imie);
+        strcpy((*glowny)->imie, imie);
+        break;
+    
+    case 3:
+        printf("Nazwisko: %s -> ", (*glowny)->nazwisko);
+        char naz[20];
+        scanf("%s", naz);
+        strcpy((*glowny)->nazwisko, naz);
+        break;
+    
+    case 4:
+        printf("Data urodzenia: %d/%d/%d -> \n", (*glowny)->dob.dzien, (*glowny)->dob.miesiac, (*glowny)->dob.rok);
+        int dob;
+        printf("Dzien: ");
+        scanf(" %d", &dob);
+        (*glowny)->dob.dzien = dob;
+        printf("Miesiac: ");
+        scanf(" %d", &dob);
+        (*glowny)->dob.miesiac = dob;
+        printf("Rok: ");
+        scanf(" %d", &dob);
+        (*glowny)->dob.rok = dob;
+        break;
+    
+    case 5:
+        printf("Pesel: %s -> ", (*glowny)->pesel);
+        char pesel[11];
+        scanf("%s", pesel);
+        strcpy((*glowny)->pesel, pesel);
+        break;
+    
+    case 6:
+        printf("Miejsce zamieszkania: %s -> ", (*glowny)->adres);
+        char adr[40];
+        scanf("%s", adr);
+        strcpy((*glowny)->nazwisko, adr);
+        break;
+    
+    case 7:
+        printf("Email: %s -> ", (*glowny)->email);
+        char email[40];
+        scanf("%s", email);
+        strcpy((*glowny)->email, email);
+        break;
+    
+    case 8:
+        printf("Nr.Telefonu: %s -> ", (*glowny)->tel);
+        char tel[10];
+        scanf("%s", tel);
+        strcpy((*glowny)->tel, tel);
+        break;
+    
+    case 9:
+        printf("Waga: %d -> ", (*glowny)->waga);
+        int waga;
+        scanf(" %d", &waga);
+        (*glowny)->waga = waga;
+        break;
+    
+    case 10:
+        printf("Wzrost: %d -> ", (*glowny)->wzrost);
+        int wzrost;
+        scanf(" %d", &wzrost);
+        (*glowny)->wzrost = wzrost;
+        break;
+    
+    case 11:
+        printf("Oddzial NFZ: %s -> ", (*glowny)->OddzialNFZ);
+        char nfz[40];
+        scanf("%s", nfz);
+        strcpy((*glowny)->OddzialNFZ, nfz);
+        break;
+    
+    default:
+        break;
+    }
+    printf("\n");
 }
 
 // Funkcje Dodatkowe Dla Listy Lekarzy
@@ -133,7 +288,6 @@ char * strFormat(struct Lekarz *glowny) {
         strcat(str, " ");
     }
     strcat(str, glowny->OddzialNFZ);
-    printf("%ld\n", strlen(str));
     return str;
 }
 
@@ -148,6 +302,10 @@ void wyswietlLekarzy(struct Lekarz *glowny) {
         }
     }
 
+}
+
+void wyswietlLekarza(struct Lekarz *glowny) {
+    printf("1. ID: %s\n2. Imie: %s\n3. Nazwisko: %s\n4. Dzien urodzenia: %d/%d/%d\n5. PESEL: %s\n6. Adres zamieszkania: %s\n7. Email: %s\n8. Telefon: %s\n9. Waga: %d\n10. Wzrost: %d\n11. Oddzial NFZ: %s\n\n", glowny->id, glowny->imie, glowny->nazwisko, glowny->dob.dzien, glowny->dob.miesiac, glowny->dob.rok, glowny->pesel, glowny->adres, glowny->email, glowny->tel, glowny->waga, glowny->wzrost, glowny->OddzialNFZ);
 }
 
 int liczbaLekarzy(struct Lekarz *glowny) {
@@ -289,9 +447,9 @@ void OdczytajLekarzy(FILE *file, struct Lekarz **glowny) {
         strcpy(nowyLekarz->id, dane[0]);
         strcpy(nowyLekarz->imie, dane[1]);
         strcpy(nowyLekarz->nazwisko, dane[2]);
-        nowyLekarz->waga = atoi(dane[3]);
-        nowyLekarz->waga = atoi(dane[4]);
-        nowyLekarz->waga = atoi(dane[5]);
+        nowyLekarz->dob.dzien = atoi(dane[3]);
+        nowyLekarz->dob.miesiac = atoi(dane[4]);
+        nowyLekarz->dob.rok = atoi(dane[5]);
         strcpy(nowyLekarz->pesel, dane[6]);
         strcpy(nowyLekarz->adres, dane[7]);
         strcpy(nowyLekarz->email, dane[8]);
