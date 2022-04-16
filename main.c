@@ -10,13 +10,13 @@ int main() {
     glowny = NULL;
 
     wyswietlLekarzy(glowny);
-    /*
-    dodajLekarzaNaKoniec(&glowny, "Adam", "Monetka", "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
-    dodajLekarzaNaKoniec(&glowny, "Radoslaw", "Koscielec", "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
-    dodajLekarzaNaKoniec(&glowny, "Mariusz", "Pudzianowski", "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
+    
+    dodajLekarzaNaKoniec(&glowny, "Adam", "Monetka", 12, 6, 1986, "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
+    dodajLekarzaNaKoniec(&glowny, "Radoslaw", "Koscielec", 4, 12, 1992, "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
+    dodajLekarzaNaKoniec(&glowny, "Mariusz", "Pudzianowski", 27, 3, 1978, "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
 
     wyswietlLekarzy(glowny);
-
+    /*
     dodajLekarzaNaKoniec(&glowny, "Wikary", "Marcepan", "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
 
     wyswietlLekarzy(glowny);
@@ -31,11 +31,13 @@ int main() {
     */
     FILE *plik;
     
-    //ZapiszLekarzy(plik, glowny);
+    ZapiszLekarzy(plik, glowny);
 
-    glowny = OdczytajLekarzy(plik, &glowny);
+    //OdczytajLekarzy(plik, &glowny);
 
     wyswietlLekarzy(glowny);
+
+    //usunLekarza(&glowny, "L000");
 
     return 0;
 }
