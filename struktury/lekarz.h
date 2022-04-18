@@ -33,6 +33,7 @@ void usunOstatniego(struct Lekarz **glowny);
 void usunLekarza(struct Lekarz **glowny, char id[]);
 void edytujLekarzaMenu(struct Lekarz **glowny);
 void edytujLekarza(struct Lekarz **glowny, int opcja);
+void dodajLekarza(struct Lekarz **glowny);
 
 // Funkcje Dodatkowe Dla Listy Lekarzy
 

@@ -48,6 +48,8 @@ void usunPierwszego(struct Lekarz **glowny) {
     if (tmp->nastepny != NULL)
     {
         *glowny = tmp->nastepny;
+    } else {
+        *glowny = NULL;
     }
     free(tmp);
 }
@@ -72,7 +74,7 @@ void usunOstatniego(struct Lekarz **glowny) {
 
 void usunLekarza(struct Lekarz **glowny, char id[]) {
     
-    if (strcmp( id, (*glowny)->id) == 0)
+    if (strcmp( id, (*glowny)->id) == 0 || liczbaLekarzy(*glowny) == 1)
     {
         usunPierwszego(glowny);
     } else {
@@ -142,21 +144,21 @@ void edytujLekarza(struct Lekarz **glowny, int opcja) {
     case 1:
         printf("ID: %s -> ", (*glowny)->id);
         char id[5];
-        scanf("%s", id);
+        scanf(" %4[^\n]%*c", id);
         strcpy((*glowny)->id, id);
         break;
     
     case 2:
         printf("Imie: %s -> ", (*glowny)->imie);
         char imie[20];
-        scanf("%s", imie);
+        scanf(" %19[^\n]%*c", imie);
         strcpy((*glowny)->imie, imie);
         break;
     
     case 3:
         printf("Nazwisko: %s -> ", (*glowny)->nazwisko);
         char naz[20];
-        scanf("%s", naz);
+        scanf(" %19[^\n]%*c", naz);
         strcpy((*glowny)->nazwisko, naz);
         break;
     
@@ -177,28 +179,28 @@ void edytujLekarza(struct Lekarz **glowny, int opcja) {
     case 5:
         printf("Pesel: %s -> ", (*glowny)->pesel);
         char pesel[11];
-        scanf("%s", pesel);
+        scanf(" %10[^\n]%*c", pesel);
         strcpy((*glowny)->pesel, pesel);
         break;
     
     case 6:
         printf("Miejsce zamieszkania: %s -> ", (*glowny)->adres);
         char adr[40];
-        scanf("%s", adr);
+        scanf(" %39[^\n]%*c", adr);
         strcpy((*glowny)->nazwisko, adr);
         break;
     
     case 7:
         printf("Email: %s -> ", (*glowny)->email);
         char email[40];
-        scanf("%s", email);
+        scanf(" %39[^\n]%*c", email);
         strcpy((*glowny)->email, email);
         break;
     
     case 8:
         printf("Nr.Telefonu: %s -> ", (*glowny)->tel);
         char tel[10];
-        scanf("%s", tel);
+        scanf(" %9[^\n]%*c", tel);
         strcpy((*glowny)->tel, tel);
         break;
     
@@ -219,7 +221,7 @@ void edytujLekarza(struct Lekarz **glowny, int opcja) {
     case 11:
         printf("Oddzial NFZ: %s -> ", (*glowny)->OddzialNFZ);
         char nfz[40];
-        scanf("%s", nfz);
+        scanf(" %39[^\n]%*c", nfz);
         strcpy((*glowny)->OddzialNFZ, nfz);
         break;
     
@@ -227,6 +229,46 @@ void edytujLekarza(struct Lekarz **glowny, int opcja) {
         break;
     }
     printf("\n");
+}
+
+void dodajLekarza(struct Lekarz **glowny) {
+    printf("\nDodaj lekarza:\n");
+            char imie[20];
+            printf("Imie: ");
+            scanf(" %19[^\n]%*c", imie);
+            char nazwisko[21];
+            printf("Nazwisko: ");
+            scanf(" %19[^\n]%*c", nazwisko);
+            int d, m, r;
+            printf("Dzien urodzenia\nDzien: ");
+            scanf(" %d", &d);
+            printf("Miesiac: ");
+            scanf(" %d", &m);
+            printf("Rok: ");
+            scanf(" %d", &r);
+            char pesel[11];
+            printf("PESEL: ");
+            scanf(" %10[^\n]%*c", pesel);
+            char adres[40];
+            printf("Adres: ");
+            scanf(" %39[^\n]%*c", adres);
+            char tel[40];
+            printf("Telefon: ");
+            scanf(" %9[^\n]%*c", tel);
+            int waga, wzost;
+            printf("Waga: ");
+            scanf(" %d", &waga);
+            printf("Wzrost: ");
+            scanf(" %d", &wzost);
+            char NFZ[40];
+            printf("Oddzial NFZ: ");
+            scanf(" %39[^\n]%*c", NFZ);
+            
+            printf("\nNowy lekarz:\n%s %s %d/%d/%d %s %s %s %d %d %s", imie, nazwisko, d, m, r, pesel, adres, tel, waga, wzost, NFZ);
+            
+            dodajLekarzaNaKoniec(glowny, imie, nazwisko, d, m, r, pesel, adres, tel, waga, wzost, NFZ);
+
+            printf("\n");
 }
 
 // Funkcje Dodatkowe Dla Listy Lekarzy
@@ -288,6 +330,11 @@ char * strFormat(struct Lekarz *glowny) {
         strcat(str, " ");
     }
     strcat(str, glowny->OddzialNFZ);
+    if (str[strlen(str)-1] == '\n')
+    {
+        str[strlen(str)-1] = '\0';
+    }
+    
     return str;
 }
 
@@ -362,7 +409,7 @@ char * strFFile(struct Lekarz *glowny) {
     int dlugosc = 200;
     char *str = malloc(dlugosc);
 
-    strcat(str, glowny->id);
+    strcpy(str, glowny->id);
     strcat(str, "|");
     strcat(str, glowny->imie);
     strcat(str, "|");
@@ -399,14 +446,14 @@ char * strFFile(struct Lekarz *glowny) {
 
     // Funkcja zapisu do pliku
 void ZapiszLekarzy(FILE *file, struct Lekarz *glowny) {
-    if ((file = fopen("dane/lista_lekarzy.txt", "wb+")) == NULL) {
+    if ((file = fopen("dane/lista_lekarzy.txt", "w")) == NULL) {
         printf ("Nie mogę otworzyć pliku lista_lekarzy.txt do zapisu !\n");
         return;
     }
     if (glowny == NULL) printf("Lista lekarzy jest pusta.\n");
     else {
         while(glowny != NULL) {
-            fprintf(file, "%s\n", strFFile(glowny));
+            fprintf(file, "%s", strFFile(glowny));
             glowny = glowny->nastepny;
         }
         if (fwrite != 0) {
@@ -421,7 +468,7 @@ void ZapiszLekarzy(FILE *file, struct Lekarz *glowny) {
     // Funkcja odczytu z pliku
 void OdczytajLekarzy(FILE *file, struct Lekarz **glowny) {
     if ((file = fopen("dane/lista_lekarzy.txt", "r")) == NULL) {
-        printf ("Nie mogę otworzyć pliku lista_lekarzy.txt do zapisu !\n");
+        printf ("Nie mogę otworzyć pliku lista_lekarzy.txt do odczytu !\n");
         return;
     }
 
