@@ -73,7 +73,7 @@ void usunOstatniego(struct Lekarz **glowny) {
 }
 
 void usunLekarza(struct Lekarz **glowny, char id[]) {
-    
+    int liczba = 2;
     if (strcmp( id, (*glowny)->id) == 0 || liczbaLekarzy(*glowny) == 1)
     {
         usunPierwszego(glowny);
@@ -83,8 +83,9 @@ void usunLekarza(struct Lekarz **glowny, char id[]) {
 
         while (node->nastepny != NULL && strcmp( node->nastepny->id, id) != 0) {
             node = node->nastepny;
+            liczba++;
         }
-        if (strcmp( node->nastepny->id, id) == 0)
+        if (liczba == liczbaLekarzy(*glowny))
         {
             usunOstatniego(glowny);
         } else {
