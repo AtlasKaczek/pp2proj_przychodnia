@@ -41,10 +41,11 @@ void wyswietlLekarzy(struct Lekarz *glowny);
 void wyswietlLekarza(struct Lekarz *glowny);
 int liczbaLekarzy(struct Lekarz *glowny);
 char * generujIDLekarz(struct Lekarz *glowny);
-int sprawdzID(struct Lekarz *glowny, char id[5]);
+int sprawdzIDLekarz(struct Lekarz *glowny, char id[5]);
+struct Lekarz * wybranyLekarz(struct Lekarz *head, char lekarz[5]);
 
 // Funkcje Zapisu I Odczytu Listy Lekarzy
 
-char * strFFile(struct Lekarz *glowny);
+char * strFFileLekarz(struct Lekarz *glowny);
 void ZapiszLekarzy(FILE *file, struct Lekarz *glowny);
 void OdczytajLekarzy(FILE *file, struct Lekarz **glowny);

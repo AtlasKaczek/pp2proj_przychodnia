@@ -379,7 +379,7 @@ char * generujIDLekarz(struct Lekarz *glowny) {
         return str;
     }
     int licznik_id = 0;
-    while(sprawdzID(glowny, str) == 1) {
+    while(sprawdzIDLekarz(glowny, str) == 1) {
         str[1] = 48 + licznik_id%1000 - licznik_id%100;
         str[2] = 48 + licznik_id%100 - licznik_id%10;
         str[3] = 48 + licznik_id%10;
@@ -389,7 +389,7 @@ char * generujIDLekarz(struct Lekarz *glowny) {
     return str;
 }
 
-int sprawdzID(struct Lekarz *glowny, char id[5]) {
+int sprawdzIDLekarz(struct Lekarz *glowny, char id[5]) {
     int czastkowa = 0;
     struct Lekarz *node = glowny;
     do {
@@ -402,11 +402,26 @@ int sprawdzID(struct Lekarz *glowny, char id[5]) {
     return 0;
 }
 
+struct Lekarz *wybranyLekarz(struct Lekarz *head, char lekarz[5]) {
+    struct Lekarz *tmp = head;
+    while (tmp != NULL)
+    {
+        if (strcmp(tmp->id, lekarz) == 1)
+        {
+            return tmp;
+        }
+        
+        tmp = tmp->nastepny;
+    }
+
+    return NULL;
+}
+
 // Funkcje Zapisu I Odczytu Listy Lekarzy
 
 
     // Funkcja formatujaca dane lekarza
-char * strFFile(struct Lekarz *glowny) {
+char * strFFileLekarz(struct Lekarz *glowny) {
     int dlugosc = 200;
     char *str = malloc(dlugosc);
 
@@ -454,7 +469,7 @@ void ZapiszLekarzy(FILE *file, struct Lekarz *glowny) {
     if (glowny == NULL) printf("Lista lekarzy jest pusta.\n");
     else {
         while(glowny != NULL) {
-            fprintf(file, "%s", strFFile(glowny));
+            fprintf(file, "%s", strFFileLekarz(glowny));
             glowny = glowny->nastepny;
         }
         if (fwrite != 0) {
