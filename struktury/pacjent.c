@@ -4,6 +4,21 @@
 
 #include "pacjent.h"
 
+struct Pacjent *wybranyPacjent(struct Pacjent *head, char pacjent[5]) {
+    struct Pacjent *tmp = head;
+    while (tmp != NULL)
+    {
+        if (strcmp(tmp->id, pacjent) == 1)
+        {
+            return tmp;
+        }
+        
+        tmp = tmp->nastepny;
+    }
+
+    return NULL;
+}
+
 void dodajPacjentaNaKoniec(struct Pacjent **glowny, char imie[], char nazwisko[], int dzien, int miesiac, int rok, char pesel[], char adres[], char tel[], unsigned int waga, unsigned int wzrost) {
 
     struct Pacjent *nowyPacjent = (struct Pacjent *)malloc(sizeof(struct Pacjent));
@@ -16,6 +31,7 @@ void dodajPacjentaNaKoniec(struct Pacjent **glowny, char imie[], char nazwisko[]
     nowyPacjent->dob.rok = rok;
     strcpy(nowyPacjent->pesel, pesel);
     strcpy(nowyPacjent->adres, adres);
+    strcpy(nowyPacjent->email, email);
     strcpy(nowyPacjent->tel, tel);
     nowyPacjent->waga = waga;
     nowyPacjent->wzrost = wzrost;
@@ -241,6 +257,9 @@ void dodajPacjenta(struct Pacjent **glowny) {
             char adres[40];
             printf("Adres: ");
             scanf(" %39[^\n]%*c", adres);
+            char email[40];
+            printf("Email: ");
+            scanf(" %39[^\n]%*s", email);
             char tel[40];
             printf("Telefon: ");
             scanf(" %9[^\n]%*c", tel);
@@ -251,9 +270,9 @@ void dodajPacjenta(struct Pacjent **glowny) {
             scanf(" %d", &wzost);
 
 
-            printf("\nNowy pacjent:\n%s %s %d/%d/%d %s %s %s %d %d ", imie, nazwisko, d, m, r, pesel, adres, tel, waga, wzost);
+            printf("\nNowy pacjent:\n%s %s %d/%d/%d %s %s %s %s %d %d ", imie, nazwisko, d, m, r, pesel, adres, email, tel, waga, wzost);
 
-            dodajPacjentaNaKoniec(glowny, imie, nazwisko, d, m, r, pesel, adres, tel, waga, wzost);
+            dodajPacjentaNaKoniec(glowny, imie, nazwisko, d, m, r, pesel, adres, email, tel, waga, wzost);
 
             printf("\n");
 }
@@ -296,6 +315,10 @@ char * strFormat(struct Pacjent *glowny) {
     for (int i = 0; i < 40 - strlen(glowny->adres) ; i++) {
         strcat(str, " ");
     }
+    strcat(str, glowny->email);
+    for (int i = 0; i < 40 - strlen(glowny->email) ; i++) {
+        strcat(str, " ");
+    }
     strcat(str, glowny->tel);
     for (int i = 0; i < 13 - strlen(glowny->tel) ; i++) {
         strcat(str, " ");
@@ -318,7 +341,7 @@ void wyswietlPacjentow(struct Pacjent *glowny) {
 
     if (glowny == NULL) printf("\nLista pacjentow jest pusta.\n");
     else {
-        printf("\nID     IMIE        NAZWISKO       DZIEN URODZIN   PESEL        ADRES ZAMIESZKANIA        TELEFON      WAGA  WZROST \n");
+        printf("\nID     IMIE        NAZWISKO       DZIEN URODZIN   PESEL        ADRES ZAMIESZKANIA                      EMAIL                                   TELEFON      WAGA  WZROST \n");
         while(glowny != NULL) {
             printf("%s\n", strFormat(glowny));
             glowny = glowny->nastepny;
@@ -328,7 +351,7 @@ void wyswietlPacjentow(struct Pacjent *glowny) {
 }
 
 void wyswietlPacjenta(struct Pacjent *glowny) {
-    printf("1. ID: %s\n2. Imie: %s\n3. Nazwisko: %s\n4. Dzien urodzenia: %d/%d/%d\n5. PESEL: %s\n6. Adres zamieszkania: %s\n7. Telefon: %s\n8. Waga: %d\n9. Wzrost: %d\n\n", glowny->id, glowny->imie, glowny->nazwisko, glowny->dob.dzien, glowny->dob.miesiac, glowny->dob.rok, glowny->pesel, glowny->adres, glowny->tel, glowny->waga, glowny->wzrost,);
+    printf("1. ID: %s\n2. Imie: %s\n3. Nazwisko: %s\n4. Dzien urodzenia: %d/%d/%d\n5. PESEL: %s\n6. Adres zamieszkania: %s\n7. Email: %s\n8. Telefon: %s\n9. Waga: %d\n10. Wzrost: %d\n\n", glowny->id, glowny->imie, glowny->nazwisko, glowny->dob.dzien, glowny->dob.miesiac, glowny->dob.rok, glowny->pesel, glowny->adres, glowny->email, glowny->tel, glowny->waga, glowny->wzrost);
 }
 
 int liczbaPacjentow(struct Pacjent *glowny) {
@@ -401,6 +424,8 @@ char * strFFile(struct Pacjent *glowny) {
     strcat(str, "|");
     strcat(str, glowny->adres);
     strcat(str, "|");
+    strcat(str, glowny->email);
+    strcat(str, "|");
     strcat(str, glowny->tel);
     strcat(str, "|");
     sprintf( intos, "%d", glowny->waga);
@@ -466,9 +491,10 @@ void OdczytajPacjentow(FILE *file, struct Pacjent **glowny) {
         nowyPacjent->dob.rok = atoi(dane[5]);
         strcpy(nowyPacjent->pesel, dane[6]);
         strcpy(nowyPacjent->adres, dane[7]);
-        strcpy(nowyPacjent->tel, dane[8]);
-        nowyPacjent->waga = atoi(dane[9]);
-        nowyPacjent->wzrost = atoi(dane[10]);
+        strcpy(nowyLekarz->email, dane[8]);
+        strcpy(nowyPacjent->tel, dane[9]);
+        nowyPacjent->waga = atoi(dane[10]);
+        nowyPacjent->wzrost = atoi(dane[11]);
         nowyPacjent->poprzedni = nowyPacjent->nastepny = NULL;
 
         struct Pacjent *tmp = *glowny;

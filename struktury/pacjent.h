@@ -13,6 +13,7 @@ struct Pacjent {
     struct Date dob;
     char pesel[11];
     char adres[40];
+    char email[40];
     char tel[10];
     unsigned int waga;
     unsigned int wzrost;
