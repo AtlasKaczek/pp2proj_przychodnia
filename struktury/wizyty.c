@@ -408,21 +408,3 @@ void OdczytajWizyty(FILE *file, struct Wizyta **glowny, struct Lekarz *head_leka
 
     fclose(file);
 }
-
-// Przenieść do Pacjent.c
-/*
-struct Pacjent *wybranyPacjent(struct Pacjent *head, char pacjent[5]) {
-    struct Pacjent *tmp = head;
-    while (tmp != NULL)
-    {
-        if (strcmp(tmp->id, pacjent) == 1)
-        {
-            return tmp;
-        }
-        
-        tmp = tmp->nastepny;
-    }
-
-    return NULL;
-}
-*/
