@@ -1,18 +1,10 @@
+#ifndef WIZYTY
+#define WIZYTY
+
 
 #include "lekarz.h"
 #include "pacjent.h"
-
-struct Date
-{
-    int dzien;
-    int miesiac;
-    int rok;
-};
-
-struct Hour {
-    int godzina;
-    int minuta;
-};
+#include "pomocnicze.h"
 
 struct Wizyta {
     
@@ -26,12 +18,13 @@ struct Wizyta {
     struct Wizyta* poprzedni;
 };
 
-void dodajWizyteNaKoniec(struct Wizyta **head, struct Lekarz *head_lekarz, struct Pacjent *head_pacjent, char id[5], int dzien, int miesiac, int rok, int godzina, int minuta, char lekarz[5], char pacjent[5]);
+void dodajWizyteNaKoniec(struct Wizyta **head, struct Lekarz *head_lekarz, struct Pacjent *head_pacjent, int dzien, int miesiac, int rok, int godzina, int minuta, char lekarz[5], char pacjent[5]);
 void usunPierwszaWizyte(struct Wizyta **glowny);
 void usunOstatniaWizyte(struct Wizyta **glowny);
 void usunWizyte(struct Wizyta **glowny, char id[]);
-void edytujWizyte(struct Wizyta **glowny, int opcja);
-void edytujWizyteMenu(struct Wizyta **glowny);
+void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent *g_pacjent, int opcja);
+void edytujWizyteMenu(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent *g_pacjent);
+void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent *g_pacjent);
 
 void wyswietlWizyty(struct Wizyta *glowny);
 void wyswietlWizyte(struct Wizyta *glowny);
@@ -42,3 +35,5 @@ int liczbaWizyt(struct Wizyta *glowny);
 char * strFFileWizyta(struct Wizyta *glowny);
 void ZapiszWizyty(FILE *file, struct Wizyta *glowny);
 void OdczytajWizyty(FILE *file, struct Wizyta **glowny, struct Lekarz *head_lekarz, struct Pacjent *head_pacjent);
+
+#endif

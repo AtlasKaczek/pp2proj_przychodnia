@@ -1,12 +1,9 @@
+#ifndef LEKARZ
+#define LEKARZ
+
+#include "pomocnicze.h"
+
 // Lista Lekarzy i odpowiednie funkcje
-
-struct Date
-{
-    int dzien;
-    int miesiac;
-    int rok;
-};
-
 
 struct Lekarz {
     char id[5];
@@ -49,3 +46,5 @@ struct Lekarz * wybranyLekarz(struct Lekarz *head, char lekarz[5]);
 char * strFFileLekarz(struct Lekarz *glowny);
 void ZapiszLekarzy(FILE *file, struct Lekarz *glowny);
 void OdczytajLekarzy(FILE *file, struct Lekarz **glowny);
+
+#endif

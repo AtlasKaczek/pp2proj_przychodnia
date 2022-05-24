@@ -6,10 +6,10 @@
 #include "pacjent.h"
 #include "wizyty.h"
 
-void dodajWizyteNaKoniec(struct Wizyta **head, struct Lekarz *head_lekarz, struct Pacjent *head_pacjent, char id[5], int dzien, int miesiac, int rok, int godzina, int minuta, char lekarz[5], char pacjent[5]) {
+void dodajWizyteNaKoniec(struct Wizyta **head, struct Lekarz *head_lekarz, struct Pacjent *head_pacjent, int dzien, int miesiac, int rok, int godzina, int minuta, char lekarz[5], char pacjent[5]) {
     
     struct Wizyta *nowa = (struct Wizyta *)malloc(sizeof(struct Wizyta));
-    strcpy(nowa->id, id);
+    strcpy(nowa->id, generujIDWizyta(*head));
     nowa->data.dzien = dzien;
     nowa->data.miesiac = miesiac;
     nowa->data.rok = rok;
@@ -104,40 +104,6 @@ int liczbaWizyt(struct Wizyta *glowny) {
     return liczba;
 }
 
-char * generujIDWizyta(struct Wizyta *glowny) {
-    char *str = malloc(5);
-    str[0] = 'L';
-    str[1] = '0';
-    str[2] = '0';
-    str[3] = '0';
-    str[4] = '\0';
-    if (liczbaWizyt(glowny) == 0) {
-        return str;
-    }
-    int licznik_id = 0;
-    while(sprawdzID(glowny, str) == 1) {
-        str[1] = 48 + licznik_id%1000 - licznik_id%100;
-        str[2] = 48 + licznik_id%100 - licznik_id%10;
-        str[3] = 48 + licznik_id%10;
-        licznik_id++;
-    }
-
-    return str;
-}
-
-int sprawdzIDWizyta(struct Wizyta *glowny, char id[5]) {
-    int czastkowa = 0;
-    struct Wizyta *node = glowny;
-    do {
-        if( strcmp(node->id, id) == 0) {
-            return 1;
-        }
-        node = node->nastepny;
-    } while (node != NULL);
-    
-    return 0;
-}
-
 char * strFormatWizyta(struct Wizyta *glowny) {
     int dlugosc = 200;
     char * str = malloc(dlugosc);
@@ -204,7 +170,7 @@ void wyswietlWizyte(struct Wizyta *glowny) {
     printf("1. ID: %s\n2. Data: %d/%d/%d\n3. Godzina: %d:%d\n4. Lekarz: %s %s (%s) \n5. Pacjent: %s %s (%s)\n", glowny->id, glowny->data.dzien, glowny->data.miesiac, glowny->data.rok, glowny->time.godzina, glowny->time.minuta, glowny->lekarz->imie, glowny->lekarz->nazwisko, glowny->lekarz->id, glowny->pacjent->imie, glowny->pacjent->nazwisko, glowny->pacjent->id);
 }
 
-void edytujWizyteMenu(struct Wizyta **glowny) {
+void edytujWizyteMenu(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent *g_pacjent) {
     
     char id[5];
     printf("\nWybierz wizyte, ktora chcesz edytowac (id): ");
@@ -220,7 +186,7 @@ void edytujWizyteMenu(struct Wizyta **glowny) {
             printf("0. Zatwierdz");
             printf("Wybierz pole do edycji: ");
             scanf(" %d", &opcja);
-            edytujLekarza(glowny, opcja);
+            edytujWizyte(glowny, g_lekarz, g_pacjent, opcja);
         }
         
     } else {
@@ -232,18 +198,18 @@ void edytujWizyteMenu(struct Wizyta **glowny) {
         
         while (opcja != 0)
         {
-            wyswietlLekarza(node->nastepny);
+            wyswietlWizyte(node->nastepny);
             printf("0. Zatwierdz\n\n");
             printf("Wybierz pole do edycji: ");
             scanf(" %d", &opcja);
-            edytujLekarza(&(node->nastepny), opcja);
+            edytujWizyte(&(node->nastepny), g_lekarz, g_pacjent, opcja);
         }
     }
     
     printf("Pomyslnie edytowano wizyte .\n");
 }
 
-void edytujWizyte(struct Wizyta **glowny, int opcja) {
+void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent *g_pacjent, int opcja) {
     char id[5];
     int data = 0;
     switch (opcja)
@@ -280,19 +246,79 @@ void edytujWizyte(struct Wizyta **glowny, int opcja) {
     case 4:
         printf("Lekarz: %s %s (%s) -> ID: ", (*glowny)->lekarz->imie, (*glowny)->lekarz->nazwisko, (*glowny)->lekarz->id);
         scanf(" %4[^\n]%*c", id);
-        strcpy((*glowny)->lekarz->id, id);
+        (*glowny)->lekarz = wybranyLekarz(g_lekarz, id);
         break;
     
     case 5:
         printf("Pacjent: %s %s (%s) ->  ID: ", (*glowny)->pacjent->imie, (*glowny)->pacjent->nazwisko, (*glowny)->pacjent->id);
         scanf(" %4[^\n]%*c", id);
-        strcpy((*glowny)->pacjent->id, id);
+        (*glowny)->pacjent = wybranyPacjent(g_pacjent, id);
         break;
     
     default:
         break;
     }
     printf("\n");
+}
+
+void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent *g_pacjent) {
+    printf("\nDodaj wizyte:\n");
+    int d, m, r;
+    printf("Dzien wizyty\nDzien: ");
+    scanf(" %d", &d);
+    printf("Miesiac: ");
+    scanf(" %d", &m);
+    printf("Rok: ");
+    scanf(" %d", &r);
+    int godz, min;
+    printf("Godzina wizyty\nGodzina: ");
+    scanf(" %d", &godz);
+    printf("Minuta: ");
+    scanf(" %d", &min);
+    
+    char id_l[5];
+    printf("Lekarz (ID np. L001): ");
+    scanf(" %4[^\n]%*c", id_l);
+    char id_p[5];
+    printf("Pacjent (ID np. P001): ");
+    scanf(" %4[^\n]%*c", id_p);
+    
+    dodajWizyteNaKoniec(glowny, g_lekarz, g_pacjent, d, m, r, godz, min, id_l, id_p);
+    printf("\n");
+}
+
+char * generujIDWizyta(struct Wizyta *glowny) {
+    char *str = malloc(5);
+    str[0] = 'W';
+    str[1] = '0';
+    str[2] = '0';
+    str[3] = '0';
+    str[4] = '\0';
+    if (liczbaWizyt(glowny) == 0) {
+        return str;
+    }
+    int licznik_id = 0;
+    while(sprawdzIDWizyta(glowny, str) == 1) {
+        str[1] = 48 + licznik_id%1000 - licznik_id%100;
+        str[2] = 48 + licznik_id%100 - licznik_id%10;
+        str[3] = 48 + licznik_id%10;
+        licznik_id++;
+    }
+
+    return str;
+}
+
+int sprawdzIDWizyta(struct Wizyta *glowny, char id[5]) {
+    int czastkowa = 0;
+    struct Wizyta *node = glowny;
+    do {
+        if( strcmp(node->id, id) == 0) {
+            return 1;
+        }
+        node = node->nastepny;
+    } while (node != NULL);
+    
+    return 0;
 }
 
 // Funkcje Zapisu I Odczytu Listy Lekarzy

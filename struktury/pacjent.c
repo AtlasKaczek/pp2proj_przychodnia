@@ -19,7 +19,7 @@ struct Pacjent *wybranyPacjent(struct Pacjent *head, char pacjent[5]) {
     return NULL;
 }
 
-void dodajPacjentaNaKoniec(struct Pacjent **glowny, char imie[], char nazwisko[], int dzien, int miesiac, int rok, char pesel[], char adres[], char tel[], unsigned int waga, unsigned int wzrost) {
+void dodajPacjentaNaKoniec(struct Pacjent **glowny, char imie[], char nazwisko[], int dzien, int miesiac, int rok, char pesel[], char adres[], char email[], char tel[], unsigned int waga, unsigned int wzrost) {
 
     struct Pacjent *nowyPacjent = (struct Pacjent *)malloc(sizeof(struct Pacjent));
 
@@ -277,7 +277,7 @@ void dodajPacjenta(struct Pacjent **glowny) {
             printf("\n");
 }
 
-char * strFormat(struct Pacjent *glowny) {
+char * strFormatPacjent(struct Pacjent *glowny) {
     int dlugosc = 200;
     char * str = malloc(dlugosc);
 
@@ -343,7 +343,7 @@ void wyswietlPacjentow(struct Pacjent *glowny) {
     else {
         printf("\nID     IMIE        NAZWISKO       DZIEN URODZIN   PESEL        ADRES ZAMIESZKANIA                      EMAIL                                   TELEFON      WAGA  WZROST \n");
         while(glowny != NULL) {
-            printf("%s\n", strFormat(glowny));
+            printf("%s\n", strFormatPacjent(glowny));
             glowny = glowny->nastepny;
         }
     }
@@ -368,7 +368,7 @@ int liczbaPacjentow(struct Pacjent *glowny) {
 
 char * generujIDPacjent(struct Pacjent *glowny) {
     char *str = malloc(5);
-    str[0] = 'L';
+    str[0] = 'P';
     str[1] = '0';
     str[2] = '0';
     str[3] = '0';
@@ -377,7 +377,7 @@ char * generujIDPacjent(struct Pacjent *glowny) {
         return str;
     }
     int licznik_id = 0;
-    while(sprawdzID(glowny, str) == 1) {
+    while(sprawdzIDPacjent(glowny, str) == 1) {
         str[1] = 48 + licznik_id%1000 - licznik_id%100;
         str[2] = 48 + licznik_id%100 - licznik_id%10;
         str[3] = 48 + licznik_id%10;
@@ -387,7 +387,7 @@ char * generujIDPacjent(struct Pacjent *glowny) {
     return str;
 }
 
-int sprawdzID(struct Pacjent *glowny, char id[5]) {
+int sprawdzIDPacjent(struct Pacjent *glowny, char id[5]) {
     int czastkowa = 0;
     struct Pacjent *node = glowny;
     do {
@@ -400,7 +400,7 @@ int sprawdzID(struct Pacjent *glowny, char id[5]) {
     return 0;
 }
 
-char * strFFile(struct Pacjent *glowny) {
+char * strFFilePacjent(struct Pacjent *glowny) {
     int dlugosc = 200;
     char *str = malloc(dlugosc);
 
@@ -446,7 +446,7 @@ void ZapiszPacjentow(FILE *file, struct Pacjent *glowny) {
     if (glowny == NULL) printf("Lista pacjentow jest pusta.\n");
     else {
         while(glowny != NULL) {
-            fprintf(file, "%s", strFFile(glowny));
+            fprintf(file, "%s", strFFilePacjent(glowny));
             glowny = glowny->nastepny;
         }
         if (fwrite != 0) {
@@ -491,7 +491,7 @@ void OdczytajPacjentow(FILE *file, struct Pacjent **glowny) {
         nowyPacjent->dob.rok = atoi(dane[5]);
         strcpy(nowyPacjent->pesel, dane[6]);
         strcpy(nowyPacjent->adres, dane[7]);
-        strcpy(nowyLekarz->email, dane[8]);
+        strcpy(nowyPacjent->email, dane[8]);
         strcpy(nowyPacjent->tel, dane[9]);
         nowyPacjent->waga = atoi(dane[10]);
         nowyPacjent->wzrost = atoi(dane[11]);
