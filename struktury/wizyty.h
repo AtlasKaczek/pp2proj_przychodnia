@@ -31,6 +31,7 @@ void wyswietlWizyte(struct Wizyta *glowny);
 int sprawdzIDWizyta(struct Wizyta *glowny, char id[5]);
 char * generujIDWizyta(struct Wizyta *glowny);
 int liczbaWizyt(struct Wizyta *glowny);
+struct Wizyta * wybranaWizyta(struct Wizyta *head, char wizyta[5]);
 
 char * strFFileWizyta(struct Wizyta *glowny);
 void ZapiszWizyty(FILE *file, struct Wizyta *glowny);

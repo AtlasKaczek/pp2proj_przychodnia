@@ -23,6 +23,8 @@ void dodajWizyteNaKoniec(struct Wizyta **head, struct Lekarz *head_lekarz, struc
     if ((*head) == NULL)
     {
         *head = nowa;
+        wyswietlWizyte((*head));
+        return;
     } else {
         struct Wizyta *tmp = *head;
         while (tmp->nastepny!=NULL)
@@ -155,9 +157,9 @@ char * strFormatWizyta(struct Wizyta *glowny) {
 
 void wyswietlWizyty(struct Wizyta *glowny) {
 
-    if (glowny == NULL) printf("\nLista wizyt jest pusta.\n");
+    if (glowny == NULL) { printf("\nLista wizyt jest pusta.\n"); }
     else {
-        printf("\nID     DATA   GODZINA     LEKARZ  PACJENT\n");
+        printf("\nID     DATA            GODZINA    LEKARZ    PACJENT\n");
         while(glowny != NULL) {
             printf("%s\n", strFormatWizyta(glowny));
             glowny = glowny->nastepny;
@@ -224,12 +226,27 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
         printf("Data: %d/%d/%d -> \n", (*glowny)->data.dzien, (*glowny)->data.miesiac, (*glowny)->data.rok);
         printf("Dzien: ");
         scanf(" %d", &data);
+        while (data < 0 || data > 31)
+        {
+            printf("Bledne dane!\nDzien: ");
+            scanf(" %d", &data);
+        } 
         (*glowny)->data.dzien = data;
         printf("Miesiac: ");
         scanf(" %d", &data);
+        while (data < 1 || data > 12)
+        {
+            printf("Bledne dane!\nMiesiac: ");
+            scanf(" %d", &data);
+        }
         (*glowny)->data.miesiac = data;
         printf("Rok: ");
         scanf(" %d", &data);
+        while (data < 2022 || data > 3000)
+        {
+            printf("Bledne dane!\nRok: ");
+            scanf(" %d", &data);
+        }
         (*glowny)->data.rok = data;
         break;
     
@@ -237,21 +254,43 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
         printf("Czas: %d:%d -> \n", (*glowny)->time.godzina, (*glowny)->time.minuta);
         printf("Godzina: ");
         scanf(" %d", &data);
+        while (data < 0 || data > 23)
+        {
+            printf("Bledne dane!\nGodzina: ");
+            scanf(" %d", &data);
+        } 
         (*glowny)->time.godzina = data;
         printf("Minuta: ");
         scanf(" %d", &data);
+        while (data < 0 || data > 59)
+        {
+            printf("Bledne dane!\nMinuta: ");
+            scanf(" %d", &data);
+        } 
         (*glowny)->time.minuta = data;
         break;
     
     case 4:
         printf("Lekarz: %s %s (%s) -> ID: ", (*glowny)->lekarz->imie, (*glowny)->lekarz->nazwisko, (*glowny)->lekarz->id);
         scanf(" %4[^\n]%*c", id);
+        while (strlen(id) != 4 || id[0] != 'L')
+        {
+            printf("Nie poprawna forma !\n");
+            printf("Lekarz: %s %s (%s) -> ID: ", (*glowny)->lekarz->imie, (*glowny)->lekarz->nazwisko, (*glowny)->lekarz->id);
+            scanf(" %4[^\n]%*c", id);
+        }
         (*glowny)->lekarz = wybranyLekarz(g_lekarz, id);
         break;
     
     case 5:
         printf("Pacjent: %s %s (%s) ->  ID: ", (*glowny)->pacjent->imie, (*glowny)->pacjent->nazwisko, (*glowny)->pacjent->id);
         scanf(" %4[^\n]%*c", id);
+        while (strlen(id) != 4 || id[0] != 'P')
+        {
+            printf("Nie poprawna forma !\n");
+            printf("Pacjent: %s %s (%s) ->  ID: ", (*glowny)->pacjent->imie, (*glowny)->pacjent->nazwisko, (*glowny)->pacjent->id);
+            scanf(" %4[^\n]%*c", id);
+        }
         (*glowny)->pacjent = wybranyPacjent(g_pacjent, id);
         break;
     
@@ -266,22 +305,59 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
     int d, m, r;
     printf("Dzien wizyty\nDzien: ");
     scanf(" %d", &d);
+    while (d < 0 || d > 31)
+    {
+        printf("Bledne dane!\nDzien: ");
+        scanf(" %d", &d);
+    }   
     printf("Miesiac: ");
     scanf(" %d", &m);
+    while (m < 1 || m > 12)
+    {
+        printf("Bledne dane!\nMiesiac: ");
+        scanf(" %d", &m);
+    } 
     printf("Rok: ");
     scanf(" %d", &r);
+    while (r < 2022 || r > 3000)
+    {
+        printf("Bledne dane!\nRok: ");
+        scanf(" %d", &r);
+    } 
     int godz, min;
     printf("Godzina wizyty\nGodzina: ");
     scanf(" %d", &godz);
+    while (godz < 0 || godz > 24)
+    {
+        printf("Bledne dane!\nGodzina: ");
+        scanf(" %d", &godz);
+    }  
     printf("Minuta: ");
     scanf(" %d", &min);
+    while (min < 0 || min > 59)
+    {
+        printf("Bledne dane!\nMinuta: ");
+        scanf(" %d", &min);
+    }
     
     char id_l[5];
     printf("Lekarz (ID np. L001): ");
     scanf(" %4[^\n]%*c", id_l);
+    while (strlen(id_l) != 4 || id_l[0] != 'L')
+    {
+        printf("Nie poprawna forma !\n");
+        printf("Lekarz (ID np. L001): ");
+        scanf(" %4[^\n]%*c", id_l);
+    }
     char id_p[5];
     printf("Pacjent (ID np. P001): ");
     scanf(" %4[^\n]%*c", id_p);
+    while (strlen(id_p) != 4 || id_p[0] != 'P')
+    {
+        printf("Nie poprawna forma !\n");
+        printf("Pacjent (ID np. P001): ");
+        scanf(" %4[^\n]%*c", id_p);
+    }
     
     dodajWizyteNaKoniec(glowny, g_lekarz, g_pacjent, d, m, r, godz, min, id_l, id_p);
     printf("\n");
@@ -321,6 +397,21 @@ int sprawdzIDWizyta(struct Wizyta *glowny, char id[5]) {
     return 0;
 }
 
+struct Wizyta * wybranaWizyta(struct Wizyta *head, char wizyta[5]) {
+    struct Wizyta *tmp = head;
+    while (tmp != NULL)
+    {
+        if (strcmp(tmp->id, wizyta) == 0)
+        {
+            return tmp;
+        }
+        
+        tmp = tmp->nastepny;
+    }
+
+    return NULL;
+}
+
 // Funkcje Zapisu I Odczytu Listy Lekarzy
 
 
@@ -351,7 +442,7 @@ char * strFFileWizyta(struct Wizyta *glowny) {
     strcat(str, glowny->lekarz->id);
     strcat(str, "|");
     strcat(str, glowny->pacjent->id);
-
+    strcat(str, "\n");
     return str;
 }
 
@@ -390,7 +481,7 @@ void OdczytajWizyty(FILE *file, struct Wizyta **glowny, struct Lekarz *head_leka
         
         char korektor[] = "|";
         char * schowek;
-        char dane[13][40];
+        char dane[8][5];
         int i = 0;
         schowek = strtok( linia, korektor );
         while( schowek != NULL )
@@ -410,8 +501,15 @@ void OdczytajWizyty(FILE *file, struct Wizyta **glowny, struct Lekarz *head_leka
         nowaWizyta->time.godzina = atoi(dane[4]);
         nowaWizyta->time.minuta = atoi(dane[5]);
         nowaWizyta->lekarz = wybranyLekarz(head_lekarz, dane[6]);
-        nowaWizyta->pacjent = wybranyPacjent(head_pacjent, dane[7]);
+        char id_p[5];
+        for (int j = 0; j < 4; j++)
+        {
+            id_p[j] = dane[7][j];
+        }
+        id_p[5] = '\0';
         
+        nowaWizyta->pacjent = wybranyPacjent(head_pacjent, id_p);
+        wyswietlWizyte(nowaWizyta);
         nowaWizyta->poprzedni = nowaWizyta->nastepny = NULL;
 
         struct Wizyta *tmp = *glowny;

@@ -26,24 +26,46 @@ int main() {
     OdczytajPacjentow(plik, &g_pacjent);
     OdczytajWizyty(plik, &g_wizyta, g_lekarz, g_pacjent);
 
+    
     char id[5];
 
     int opcja = -1;
     while (opcja != 0)
     {
-        printf("\n1. Lista lekarzy   2. Lista pacjentow   3. Lista wizyt   0. Wyjdz");
+        printf("\n 1. Lista lekarzy\n 2. Lista pacjentow\n 3. Lista wizyt\n 0. Wyjdz");
         printf("\nWybierz opcje: ");
         scanf(" %d", &opcja);
         switch (opcja)
         {
         case 0:
-            printf("\nZamykanie...\n");
+            opcja = -1;
+            while (opcja != 0)
+            {
+                printf("\nCzy chesz zapisac zmiany i wyjsc?\n 1. Tak\n 0. Nie\nWybierz: ");
+                scanf(" %d", &opcja);
+                switch (opcja)
+                {
+                case 0:
+                    printf("\nZamykanie...\n");
+                    break;
+                case 1:
+                    ZapiszLekarzy(plik, g_lekarz);
+                    ZapiszPacjentow(plik, g_pacjent);
+                    ZapiszWizyty(plik, g_wizyta);
+                    printf("\nZamykanie...\n");
+                    opcja = 0;
+                    break;
+                default:
+                    break;
+                }
+            }
+            
             break;
 
         case 1: // Lista lekarzy
             while (opcja != 0)
             {
-                printf("\n1. Wyswietl liste lekarzy   2. Dodaj lekarza   3. Edytuj lekarza   4. Usun lekarza   5. Zapisz liste   6. Liczba lekarzy   0. Powrot");
+                printf("\n 1. Wyswietl liste lekarzy\n 2. Dodaj lekarza\n 3. Edytuj lekarza\n 4. Usun lekarza\n 5. Zapisz liste\n 6. Liczba lekarzy\n 0. Powrot");
                 printf("\nWybierz opcje: ");
                 scanf(" %d", &opcja);
                 switch (opcja)
@@ -72,7 +94,7 @@ int main() {
                     break;
 
                 case 5: // Zapisz liste lekarzy
-                    printf("\nZapisywanie...");
+                    printf("\nZapisywanie...\n");
                     ZapiszLekarzy(plik, g_lekarz);
                     break;
 
@@ -91,7 +113,7 @@ int main() {
         case 2: // Lista pacjentow
             while (opcja != 0)
             {
-                printf("\n1. Wyswietl liste pacjentow   2. Dodaj pacjenta   3. Edytuj pacjenta   4. Usun pacjenta   5. Zapisz liste   6. Liczba pacjentow   0. Powrot");
+                printf("\n 1. Wyswietl liste pacjentow\n 2. Dodaj pacjenta\n 3. Edytuj pacjenta\n 4. Usun pacjenta\n 5. Zapisz liste\n 6. Liczba pacjentow\n 0. Powrot");
                 printf("\nWybierz opcje: ");
                 scanf(" %d", &opcja);
                 switch (opcja)
@@ -120,7 +142,7 @@ int main() {
                     break;
 
                 case 5: // Zapisz liste pacjentow
-                    printf("\nZapisywanie...");
+                    printf("\nZapisywanie...\n");
                     ZapiszPacjentow(plik, g_pacjent);
                     break;
 
@@ -139,7 +161,7 @@ int main() {
         case 3: // Lista wizyt
             while (opcja != 0)
             {
-                printf("\n1. Wyswietl wizyty   2. Dodaj wizyte   3. Edytuj wizyte   4. Usun wizyte   5. Zapisz wizyte   6. Liczba wizyt   0. Powrot");
+                printf("\n 1. Wyswietl wizyty\n 2. Dodaj wizyte\n 3. Edytuj wizyte\n 4. Usun wizyte\n 5. Zapisz wizyte\n 6. Wyswietl konkretna wizyte\n 7. Liczba wizyt\n 0. Powrot");
                 printf("\nWybierz opcje: ");
                 scanf(" %d", &opcja);
                 switch (opcja)
@@ -168,11 +190,17 @@ int main() {
                     break;
 
                 case 5: // Zapisz liste pacjentow
-                    printf("\nZapisywanie...");
+                    printf("\nZapisywanie...\n");
                     ZapiszWizyty(plik, g_wizyta);
                     break;
-
+                
                 case 6: // Liczba lekarzy
+                    printf("\nPodaj ID pacjenta ( np. L001 ): ");
+                    scanf(" %4[^\n]%*c", id);
+                    wyswietlWizyte(wybranaWizyta(g_wizyta, id));
+                    break;
+
+                case 7: // Liczba lekarzy
                     printf("\nLiczba pacjentow: %d\n",liczbaPacjentow(g_pacjent));
                     break;
 
@@ -190,11 +218,5 @@ int main() {
         }
     }
 
-    
-    /*
-    dodajLekarzaNaKoniec(&g_lekarz, "Adam", "Monetka", 12, 6, 1986, "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
-    dodajLekarzaNaKoniec(&g_lekarz, "Radoslaw", "Koscielec", 4, 12, 1992, "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
-    dodajLekarzaNaKoniec(&g_lekarz, "Mariusz", "Pudzianowski", 27, 3, 1978, "0123456789", "Kielce, ul.Jana Pawla II 14", "012345678", 78, 178, "NFZ nr 135");
-    */
     return 0;
 }

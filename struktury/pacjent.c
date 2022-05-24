@@ -4,21 +4,6 @@
 
 #include "pacjent.h"
 
-struct Pacjent *wybranyPacjent(struct Pacjent *head, char pacjent[5]) {
-    struct Pacjent *tmp = head;
-    while (tmp != NULL)
-    {
-        if (strcmp(tmp->id, pacjent) == 1)
-        {
-            return tmp;
-        }
-        
-        tmp = tmp->nastepny;
-    }
-
-    return NULL;
-}
-
 void dodajPacjentaNaKoniec(struct Pacjent **glowny, char imie[], char nazwisko[], int dzien, int miesiac, int rok, char pesel[], char adres[], char email[], char tel[], unsigned int waga, unsigned int wzrost) {
 
     struct Pacjent *nowyPacjent = (struct Pacjent *)malloc(sizeof(struct Pacjent));
@@ -110,45 +95,6 @@ void usunPacjenta (struct Pacjent **glowny, char id[]) {
 
 }
 
-void edytujPacjentMenu(struct Pacjent **glowny) {
-    
-    char id[5];
-    printf("\nWybierz pacjenta, ktorego chcesz edytowac (id): ");
-    scanf("%s", id);
-
-    int opcja = -1;
-
-    if (strcmp( id, (*glowny)->id) == 0)
-    {
-        while (opcja != 0)
-        {
-            wyswietlPacjenta(*glowny);
-            printf("0. Zatwierdz");
-            printf("Wybierz pole do edycji: ");
-            scanf(" %d", &opcja);
-            edytujPacjenta(glowny, opcja);
-        }
-        
-    } else {
-        struct Pacjent *node = *glowny;
-
-        while (node->nastepny != NULL && strcmp( node->nastepny->id, id) != 0) {
-            node = node->nastepny;
-        }
-        
-        while (opcja != 0)
-        {
-            wyswietlPacjenta(node->nastepny);
-            printf("0. Zatwierdz\n\n");
-            printf("Wybierz pole do edycji: ");
-            scanf(" %d", &opcja);
-            edytujPacjenta(&(node->nastepny), opcja);
-        }
-    }
-    
-    printf("Pomyslnie edytowano pacjenta .\n");
-}
-
 void edytujPacjenta(struct Pacjent **glowny, int opcja) {
     
     switch (opcja)
@@ -157,6 +103,12 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
         printf("ID: %s -> ", (*glowny)->id);
         char id[5];
         scanf(" %4[^\n]%*c", id);
+        while (strlen(id) != 4 || id[0] != 'P')
+        {
+            printf("Nie poprawna forma !\n");
+            printf("ID: %s -> ", (*glowny)->id);
+            scanf(" %4[^\n]%*c", id);
+        }
         strcpy((*glowny)->id, id);
         break;
     
@@ -179,19 +131,34 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
         int dob;
         printf("Dzien: ");
         scanf(" %d", &dob);
+        while (dob < 0 || dob > 31)
+        {
+            printf("Bledne dane!\nDzien: ");
+            scanf(" %d", &dob);
+        }
         (*glowny)->dob.dzien = dob;
         printf("Miesiac: ");
         scanf(" %d", &dob);
+        while (dob < 0 || dob > 12)
+        {
+            printf("Bledne dane!\nMiesiac: ");
+            scanf(" %d", &dob);
+        }
         (*glowny)->dob.miesiac = dob;
         printf("Rok: ");
         scanf(" %d", &dob);
+        while (dob < 1900 || dob > 2020)
+        {
+            printf("Bledne dane!\nMiesiac: ");
+            scanf(" %d", &dob);
+        }
         (*glowny)->dob.rok = dob;
         break;
     
     case 5:
         printf("Pesel: %s -> ", (*glowny)->pesel);
-        char pesel[11];
-        scanf(" %10[^\n]%*c", pesel);
+        char pesel[12];
+        scanf(" %11[^\n]%*c", pesel);
         strcpy((*glowny)->pesel, pesel);
         break;
     
@@ -247,13 +214,28 @@ void dodajPacjenta(struct Pacjent **glowny) {
             int d, m, r;
             printf("Dzien urodzenia\nDzien: ");
             scanf(" %d", &d);
+            while (d < 0 || d > 31)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }   
             printf("Miesiac: ");
             scanf(" %d", &m);
+            while (m < 0 || m > 12)
+            {
+                printf("Bledne dane!\nMiesiac: ");
+                scanf(" %d", &m);
+            } 
             printf("Rok: ");
             scanf(" %d", &r);
-            char pesel[11];
+            while (r < 1900 || r > 2020)
+            {
+                printf("Bledne dane!\nRok: ");
+                scanf(" %d", &r);
+            } 
+            char pesel[12];
             printf("PESEL: ");
-            scanf(" %10[^\n]%*c", pesel);
+            scanf(" %11[^\n]%*c", pesel);
             char adres[40];
             printf("Adres: ");
             scanf(" %39[^\n]%*c", adres);
@@ -310,7 +292,7 @@ char * strFormatPacjent(struct Pacjent *glowny) {
     strcat(str, intos);
     strcat(str, "      ");
     strcat(str, glowny->pesel);
-    strcat(str, "   ");
+    strcat(str, "  ");
     strcat(str, glowny->adres);
     for (int i = 0; i < 40 - strlen(glowny->adres) ; i++) {
         strcat(str, " ");
@@ -352,6 +334,45 @@ void wyswietlPacjentow(struct Pacjent *glowny) {
 
 void wyswietlPacjenta(struct Pacjent *glowny) {
     printf("1. ID: %s\n2. Imie: %s\n3. Nazwisko: %s\n4. Dzien urodzenia: %d/%d/%d\n5. PESEL: %s\n6. Adres zamieszkania: %s\n7. Email: %s\n8. Telefon: %s\n9. Waga: %d\n10. Wzrost: %d\n\n", glowny->id, glowny->imie, glowny->nazwisko, glowny->dob.dzien, glowny->dob.miesiac, glowny->dob.rok, glowny->pesel, glowny->adres, glowny->email, glowny->tel, glowny->waga, glowny->wzrost);
+}
+
+void edytujPacjentaMenu(struct Pacjent **glowny) {
+    
+    char id[5];
+    printf("\nWybierz pacjenta, ktorego chcesz edytowac (id): ");
+    scanf("%s", id);
+
+    int opcja = -1;
+
+    if (strcmp( id, (*glowny)->id) == 0)
+    {
+        while (opcja != 0)
+        {
+            wyswietlPacjenta(*glowny);
+            printf("0. Zatwierdz");
+            printf("Wybierz pole do edycji: ");
+            scanf(" %d", &opcja);
+            edytujPacjenta(glowny, opcja);
+        }
+        
+    } else {
+        struct Pacjent *node = *glowny;
+
+        while (node->nastepny != NULL && strcmp( node->nastepny->id, id) != 0) {
+            node = node->nastepny;
+        }
+        
+        while (opcja != 0)
+        {
+            wyswietlPacjenta(node->nastepny);
+            printf("0. Zatwierdz\n\n");
+            printf("Wybierz pole do edycji: ");
+            scanf(" %d", &opcja);
+            edytujPacjenta(&(node->nastepny), opcja);
+        }
+    }
+    
+    printf("Pomyslnie edytowano pacjenta .\n");
 }
 
 int liczbaPacjentow(struct Pacjent *glowny) {
@@ -400,6 +421,21 @@ int sprawdzIDPacjent(struct Pacjent *glowny, char id[5]) {
     return 0;
 }
 
+struct Pacjent * wybranyPacjent(struct Pacjent *head, char pacjent[5]) {
+    struct Pacjent *tmp = head;
+    while (tmp != NULL)
+    {
+        if (strcmp(tmp->id, pacjent) == 0)
+        {
+            return tmp;
+        }
+        
+        tmp = tmp->nastepny;
+    }
+
+    return NULL;
+}
+
 char * strFFilePacjent(struct Pacjent *glowny) {
     int dlugosc = 200;
     char *str = malloc(dlugosc);
@@ -433,7 +469,7 @@ char * strFFilePacjent(struct Pacjent *glowny) {
     strcat(str, "|");
     sprintf( intos, "%d", glowny->wzrost);
     strcat(str, intos);
-    strcat(str, "|");
+    strcat(str, "\n");
 
     return str;
 }
@@ -471,7 +507,7 @@ void OdczytajPacjentow(FILE *file, struct Pacjent **glowny) {
         
         char korektor[] = "|";
         char * schowek;
-        char dane[13][40];
+        char dane[12][40];
         int i = 0;
         schowek = strtok( linia, korektor );
         while( schowek != NULL )

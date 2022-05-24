@@ -10,7 +10,7 @@ struct Lekarz {
     char imie[20];
     char nazwisko[20];
     struct Date dob;
-    char pesel[11];
+    char pesel[12];
     char adres[40];
     char email[40];
     char tel[10];

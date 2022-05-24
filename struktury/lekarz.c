@@ -7,6 +7,28 @@
 
 // Funkcje Operacji Na Liscie Lekarzy
 
+char * sprawdzEmail(struct Lekarz *head, char imie[], char nazwisko[]) {
+    char *mail = malloc(40);
+    strcpy(mail, generujEmail(imie, nazwisko, "@przychodnia.lekarz.pl"));
+    
+    char nazw[40];
+    char intos[5];
+    int licznik = 0;
+    struct Lekarz *node = head;
+    do {
+        if( strcmp(node->email, mail) == 0) {
+            strcpy(nazw, nazwisko);
+            sprintf( intos, "%d", licznik%10);
+            strcat(nazw, intos);
+            strcpy(mail, generujEmail(imie, nazw, "@przychodnia.lekarz.pl"));
+            licznik++;
+            node = head;
+        }
+        node = node->nastepny;
+    } while (node != NULL);
+    return mail;
+}
+
 void dodajLekarzaNaKoniec(struct Lekarz **glowny, char imie[], char nazwisko[], int dzien, int miesiac, int rok, char pesel[], char adres[], char tel[], unsigned int waga, unsigned int wzrost, char OddzialNFZ[]) {
         
     struct Lekarz *nowyLekarz = (struct Lekarz *)malloc(sizeof(struct Lekarz));
@@ -19,7 +41,7 @@ void dodajLekarzaNaKoniec(struct Lekarz **glowny, char imie[], char nazwisko[], 
     nowyLekarz->dob.rok = rok;
     strcpy(nowyLekarz->pesel, pesel);
     strcpy(nowyLekarz->adres, adres);
-    strcpy(nowyLekarz->email, generujEmail(imie, nazwisko, "@przychodnia.lekarz.pl"));
+    strcpy(nowyLekarz->email, sprawdzEmail(*glowny, nowyLekarz->imie, nowyLekarz->nazwisko));
     strcpy(nowyLekarz->tel, tel);
     nowyLekarz->waga = waga;
     nowyLekarz->wzrost = wzrost;
@@ -146,6 +168,13 @@ void edytujLekarza(struct Lekarz **glowny, int opcja) {
         printf("ID: %s -> ", (*glowny)->id);
         char id[5];
         scanf(" %4[^\n]%*c", id);
+        while (strlen(id) != 4 || id[0] != 'L')
+        {
+            printf("Nie poprawna forma !\n");
+            printf("ID: %s -> ", (*glowny)->id);
+            scanf(" %4[^\n]%*c", id);
+        }
+        
         strcpy((*glowny)->id, id);
         break;
     
@@ -168,19 +197,34 @@ void edytujLekarza(struct Lekarz **glowny, int opcja) {
         int dob;
         printf("Dzien: ");
         scanf(" %d", &dob);
+        while (dob < 0 || dob > 31)
+        {
+            printf("Bledne dane!\nDzien: ");
+            scanf(" %d", &dob);
+        }
         (*glowny)->dob.dzien = dob;
         printf("Miesiac: ");
         scanf(" %d", &dob);
+        while (dob < 0 || dob > 12)
+        {
+            printf("Bledne dane!\nMiesiac: ");
+            scanf(" %d", &dob);
+        }
         (*glowny)->dob.miesiac = dob;
         printf("Rok: ");
         scanf(" %d", &dob);
+        while (dob < 1900 || dob > 2020)
+        {
+            printf("Bledne dane!\nMiesiac: ");
+            scanf(" %d", &dob);
+        }
         (*glowny)->dob.rok = dob;
         break;
     
     case 5:
         printf("Pesel: %s -> ", (*glowny)->pesel);
-        char pesel[11];
-        scanf(" %10[^\n]%*c", pesel);
+        char pesel[12];
+        scanf(" %11[^\n]%*c", pesel);
         strcpy((*glowny)->pesel, pesel);
         break;
     
@@ -243,13 +287,28 @@ void dodajLekarza(struct Lekarz **glowny) {
             int d, m, r;
             printf("Dzien urodzenia\nDzien: ");
             scanf(" %d", &d);
+            while (d < 0 || d > 31)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }   
             printf("Miesiac: ");
             scanf(" %d", &m);
+            while (m < 0 || m > 12)
+            {
+                printf("Bledne dane!\nMiesiac: ");
+                scanf(" %d", &m);
+            } 
             printf("Rok: ");
             scanf(" %d", &r);
-            char pesel[11];
+            while (r < 1900 || r > 2020)
+            {
+                printf("Bledne dane!\nRok: ");
+                scanf(" %d", &r);
+            } 
+            char pesel[12];
             printf("PESEL: ");
-            scanf(" %10[^\n]%*c", pesel);
+            scanf(" %11[^\n]%*c", pesel);
             char adres[40];
             printf("Adres: ");
             scanf(" %39[^\n]%*c", adres);
@@ -307,7 +366,7 @@ char * strFormat(struct Lekarz *glowny) {
     strcat(str, intos);
     strcat(str, "      ");
     strcat(str, glowny->pesel);
-    strcat(str, "   ");
+    strcat(str, "  ");
     strcat(str, glowny->adres);
     for (int i = 0; i < 40 - strlen(glowny->adres) ; i++) {
         strcat(str, " ");
@@ -390,7 +449,6 @@ char * generujIDLekarz(struct Lekarz *glowny) {
 }
 
 int sprawdzIDLekarz(struct Lekarz *glowny, char id[5]) {
-    int czastkowa = 0;
     struct Lekarz *node = glowny;
     do {
         if( strcmp(node->id, id) == 0) {
@@ -402,11 +460,11 @@ int sprawdzIDLekarz(struct Lekarz *glowny, char id[5]) {
     return 0;
 }
 
-struct Lekarz *wybranyLekarz(struct Lekarz *head, char lekarz[5]) {
+struct Lekarz * wybranyLekarz(struct Lekarz *head, char lekarz[5]) {
     struct Lekarz *tmp = head;
     while (tmp != NULL)
     {
-        if (strcmp(tmp->id, lekarz) == 1)
+        if (strcmp(tmp->id, lekarz) == 0)
         {
             return tmp;
         }

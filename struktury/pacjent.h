@@ -8,7 +8,7 @@ struct Pacjent {
     char imie[20];
     char nazwisko[20];
     struct Date dob;
-    char pesel[11];
+    char pesel[12];
     char adres[40];
     char email[40];
     char tel[10];
@@ -23,17 +23,16 @@ void dodajPacjentaNaKoniec(struct Pacjent **glowny, char imie[], char nazwisko[]
 void usunPierwszegoPacjenta(struct Pacjent **glowny);
 void usunOstatniegoPacjenta(struct Pacjent **glowny);
 void usunPacjenta(struct Pacjent **glowny, char id[]);
-void edytujPacjentaMenu(struct Pacjent **glowny);
 void edytujPacjenta(struct Pacjent **glowny, int opcja);
+void edytujPacjentaMenu(struct Pacjent **glowny);
 void dodajPacjenta(struct Pacjent **glowny);
 
-char * strFormatPacjent(struct Pacjent *glowny);
 void wyswietlPacjentow(struct Pacjent *glowny);
 void wyswietlPacjenta(struct Pacjent *glowny);
 int liczbaPacjentow(struct Pacjent *glowny);
 char * generujIDPacjent(struct Pacjent *glowny);
 int sprawdzIDPacjent(struct Pacjent *glowny, char id[5]);
-struct Pacjent *wybranyPacjent(struct Pacjent *head, char pacjent[5]);
+struct Pacjent * wybranyPacjent(struct Pacjent *head, char pacjent[5]);
 
 char * strFFilePacjent(struct Pacjent *glowny);
 void ZapiszPacjentow(FILE *file, struct Pacjent *glowny);
