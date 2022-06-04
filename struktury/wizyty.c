@@ -6,6 +6,12 @@
 #include "pacjent.h"
 #include "wizyty.h"
 
+/// Funkcja dodajWizyteNaKoniec
+/**
+* Funkcja dodaje tworzy wizytę na podstawie podanych argumentów i dodaje ją na koniec listy wizyt.
+* Funkcja nic nie zwraca.
+*
+*/
 void dodajWizyteNaKoniec(struct Wizyta **head, struct Lekarz *head_lekarz, struct Pacjent *head_pacjent, int dzien, int miesiac, int rok, int godzina, int minuta, char lekarz[5], char pacjent[5]) {
     
     struct Wizyta *nowa = (struct Wizyta *)malloc(sizeof(struct Wizyta));
@@ -38,6 +44,12 @@ void dodajWizyteNaKoniec(struct Wizyta **head, struct Lekarz *head_lekarz, struc
     
 }
 
+/// Funkcja usunPierwszaWizyte
+/**
+* Funkcja usuwa pierwszą wizytę z listy wizyt.
+* Funkcja nic nie zwraca.
+*
+*/
 void usunPierwszaWizyte(struct Wizyta **glowny) {
     
 	struct Wizyta *tmp = *glowny;
@@ -50,6 +62,12 @@ void usunPierwszaWizyte(struct Wizyta **glowny) {
     free(tmp);
 }
 
+/// Funkcja usunOstatniaWizyte
+/**
+* Funkcja usuwa ostatnią wizytę z listy wizyt.
+* Funkcja nic nie zwraca.
+*
+*/
 void usunOstatniaWizyte(struct Wizyta **glowny) {
     struct Wizyta *tmp;
     if ((*glowny) == NULL)
@@ -68,6 +86,12 @@ void usunOstatniaWizyte(struct Wizyta **glowny) {
     }
 }
 
+/// Funkcja usunWizyte
+/**
+* Funkcja usuwa daną wizytę z listy wizyt na podstawie drugiego argumentu - ID wizyty postaci 'W000'.
+* Funkcja nic nie zwraca.
+*
+*/
 void usunWizyte(struct Wizyta **glowny, char id[]) {
     
     if (strcmp( id, (*glowny)->id) == 0 || liczbaWizyt(*glowny) == 1)
@@ -94,6 +118,12 @@ void usunWizyte(struct Wizyta **glowny, char id[]) {
     
 }
 
+/// Funkcja liczbaWizyt
+/**
+* Funkcja zlicza aktualną liczbę wizyt w liście wizyt i zwraca tą liczbę.
+*
+*
+*/
 int liczbaWizyt(struct Wizyta *glowny) {
     int liczba = 0;
     if (glowny == NULL) return 0;
@@ -106,6 +136,12 @@ int liczbaWizyt(struct Wizyta *glowny) {
     return liczba;
 }
 
+/// Funkcja strFormatWizyta
+/**
+* Funkcja tworzy i zwraca ciąg znaków zawierający dane konkretnej wizyty.
+* Funkcja wykorzystywana podczas wyświetlania listy wizyt.
+*
+*/
 char * strFormatWizyta(struct Wizyta *glowny) {
     int dlugosc = 200;
     char * str = malloc(dlugosc);
@@ -142,9 +178,18 @@ char * strFormatWizyta(struct Wizyta *glowny) {
     sprintf( intos, "%d", glowny->time.minuta);
     strcat(str, intos);
     strcat(str, "      ");
+    strcat(str, glowny->lekarz->imie);
+    strcat(str, " ");
+    strcat(str, glowny->lekarz->nazwisko);
+    strcat(str, " (");
     strcat(str, glowny->lekarz->id);
-    strcat(str, "      ");
+    strcat(str, ") / ");
+    strcat(str, glowny->pacjent->imie);
+    strcat(str, " ");
+    strcat(str, glowny->pacjent->nazwisko);
+    strcat(str, " (");
     strcat(str, glowny->pacjent->id);
+    strcat(str, ")");
 
 
     if (str[strlen(str)-1] == '\n')
@@ -155,11 +200,16 @@ char * strFormatWizyta(struct Wizyta *glowny) {
     return str;
 }
 
+/// Funkcja wyswietlWizyty
+/**
+* Funkcja wyświetla listę wizyt.
+* Funkcja nic nie zwraca.
+*/
 void wyswietlWizyty(struct Wizyta *glowny) {
 
     if (glowny == NULL) { printf("\nLista wizyt jest pusta.\n"); }
     else {
-        printf("\nID     DATA            GODZINA    LEKARZ    PACJENT\n");
+        printf("\nID     DATA            GODZINA    LEKARZ / PACJENT\n");
         while(glowny != NULL) {
             printf("%s\n", strFormatWizyta(glowny));
             glowny = glowny->nastepny;
@@ -168,10 +218,20 @@ void wyswietlWizyty(struct Wizyta *glowny) {
 
 }
 
+/// Funkcja wyswietlWizyty
+/**
+* Funkcja wyświetla konkretną wizyt.
+* Funkcja nic nie zwraca.
+*/
 void wyswietlWizyte(struct Wizyta *glowny) {
     printf("1. ID: %s\n2. Data: %d/%d/%d\n3. Godzina: %d:%d\n4. Lekarz: %s %s (%s) \n5. Pacjent: %s %s (%s)\n", glowny->id, glowny->data.dzien, glowny->data.miesiac, glowny->data.rok, glowny->time.godzina, glowny->time.minuta, glowny->lekarz->imie, glowny->lekarz->nazwisko, glowny->lekarz->id, glowny->pacjent->imie, glowny->pacjent->nazwisko, glowny->pacjent->id);
 }
 
+/// Funkcja edytujWizyteMenu
+/**
+* Funkcja stworzona z myślą o użytkowniku. Pozwala wybrać wizytę i jej konkretne pole, a następnie edytować je.
+* Funkcja nic nie zwraca.
+*/
 void edytujWizyteMenu(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent *g_pacjent) {
     
     char id[5];
@@ -211,6 +271,11 @@ void edytujWizyteMenu(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pa
     printf("Pomyslnie edytowano wizyte .\n");
 }
 
+/// Funkcja edytujWizyte
+/**
+* Funkcja pozwala edytować dane pole wizyty.
+* Funkcja nic nie zwraca.
+*/
 void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent *g_pacjent, int opcja) {
     char id[5];
     int data = 0;
@@ -252,45 +317,55 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
     
     case 3:
         printf("Czas: %d:%d -> \n", (*glowny)->time.godzina, (*glowny)->time.minuta);
-        printf("Godzina: ");
-        scanf(" %d", &data);
-        while (data < 0 || data > 23)
+        do
         {
-            printf("Bledne dane!\nGodzina: ");
+            printf("Godzina: ");
             scanf(" %d", &data);
-        } 
-        (*glowny)->time.godzina = data;
-        printf("Minuta: ");
-        scanf(" %d", &data);
-        while (data < 0 || data > 59)
-        {
-            printf("Bledne dane!\nMinuta: ");
+            while (data < 0 || data > 23)
+            {
+                printf("Bledne dane!\nGodzina: ");
+                scanf(" %d", &data);
+            }
+            (*glowny)->time.godzina = data;
+            printf("Minuta: ");
             scanf(" %d", &data);
-        } 
-        (*glowny)->time.minuta = data;
+            while (data < 0 || data > 59)
+            {
+                printf("Bledne dane!\nMinuta: ");
+                scanf(" %d", &data);
+            }
+            (*glowny)->time.minuta = data;
+        } while (((*glowny)->time.godzina > (*glowny)->lekarz->godzZakonczeniaPracy.godzina || (*glowny)->time.godzina < (*glowny)->lekarz->godzRozpoczeciaPracy.godzina));
+
         break;
-    
+
     case 4:
         printf("Lekarz: %s %s (%s) -> ID: ", (*glowny)->lekarz->imie, (*glowny)->lekarz->nazwisko, (*glowny)->lekarz->id);
         scanf(" %4[^\n]%*c", id);
-        while (strlen(id) != 4 || id[0] != 'L')
+        do
         {
-            printf("Nie poprawna forma !\n");
-            printf("Lekarz: %s %s (%s) -> ID: ", (*glowny)->lekarz->imie, (*glowny)->lekarz->nazwisko, (*glowny)->lekarz->id);
-            scanf(" %4[^\n]%*c", id);
-        }
+            while (strlen(id) != 4 || id[0] != 'L')
+            {
+                printf("Nie poprawna forma !\n");
+                printf("Lekarz: %s %s (%s) -> ID: ", (*glowny)->lekarz->imie, (*glowny)->lekarz->nazwisko, (*glowny)->lekarz->id);
+                scanf(" %4[^\n]%*c", id);
+            }
+        } while (sprawdzIDLekarz(g_lekarz, id) == 0);
         (*glowny)->lekarz = wybranyLekarz(g_lekarz, id);
         break;
     
     case 5:
         printf("Pacjent: %s %s (%s) ->  ID: ", (*glowny)->pacjent->imie, (*glowny)->pacjent->nazwisko, (*glowny)->pacjent->id);
         scanf(" %4[^\n]%*c", id);
-        while (strlen(id) != 4 || id[0] != 'P')
+        do
         {
-            printf("Nie poprawna forma !\n");
-            printf("Pacjent: %s %s (%s) ->  ID: ", (*glowny)->pacjent->imie, (*glowny)->pacjent->nazwisko, (*glowny)->pacjent->id);
-            scanf(" %4[^\n]%*c", id);
-        }
+            while (strlen(id) != 4 || id[0] != 'P')
+            {
+                printf("Nie poprawna forma !\n");
+                printf("Pacjent: %s %s (%s) ->  ID: ", (*glowny)->pacjent->imie, (*glowny)->pacjent->nazwisko, (*glowny)->pacjent->id);
+                scanf(" %4[^\n]%*c", id);
+            }
+        } while (sprawdzIDPacjent(g_pacjent, id) == 0);
         (*glowny)->pacjent = wybranyPacjent(g_pacjent, id);
         break;
     
@@ -300,6 +375,11 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
     printf("\n");
 }
 
+/// Funkcja dodajWizyte
+/**
+* Funkcja stworzona z myślą o użytkowniku. Pozwala stworzyć wizytę po wprowadzeniu przez użytkownika danych.
+* Funkcja nic nie zwraca.
+*/
 void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent *g_pacjent) {
     printf("\nDodaj wizyte:\n");
     int d, m, r;
@@ -324,7 +404,35 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
         printf("Bledne dane!\nRok: ");
         scanf(" %d", &r);
     } 
+    char id_l[5];
+    printf("Lekarz (ID np. L001): ");
+    scanf(" %4[^\n]%*c", id_l);
+    while ((strlen(id_l) != 4 || id_l[0] != 'L') || (sprawdzIDLekarz( g_lekarz, id_l) == 0))
+    {
+        printf("Nie poprawna forma !\n");
+        printf("Lekarz (ID np. L001): ");
+        scanf(" %4[^\n]%*c", id_l);
+    }
+    char id_p[5];
+    printf("Pacjent (ID np. P001): ");
+    scanf(" %4[^\n]%*c", id_p);
+    while ((strlen(id_p) != 4 || id_p[0] != 'P') || (sprawdzIDPacjent(g_pacjent, id_p) == 0))
+    {
+        printf("Nie poprawna forma !\n");
+        printf("Pacjent (ID np. P001): ");
+        scanf(" %4[^\n]%*c", id_p);
+    }
+    double czas_rozpoczecia_pracy = (double)wybranyLekarz(g_lekarz, id_l)->godzRozpoczeciaPracy.godzina + (double)wybranyLekarz(g_lekarz, id_l)->godzRozpoczeciaPracy.minuta/100;
+    double czas_zakonczenia_pracy = (double)wybranyLekarz(g_lekarz, id_l)->godzZakonczeniaPracy.godzina + (double)wybranyLekarz(g_lekarz, id_l)->godzZakonczeniaPracy.minuta/100;
+    double czas_wizyty = 0;
+
     int godz, min;
+    do {
+    if (czas_wizyty != 0)
+    {
+        printf("Czas wizyty poza godzinami pracy lekarza !\n");
+    }
+    
     printf("Godzina wizyty\nGodzina: ");
     scanf(" %d", &godz);
     while (godz < 0 || godz > 24)
@@ -339,30 +447,19 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
         printf("Bledne dane!\nMinuta: ");
         scanf(" %d", &min);
     }
-    
-    char id_l[5];
-    printf("Lekarz (ID np. L001): ");
-    scanf(" %4[^\n]%*c", id_l);
-    while (strlen(id_l) != 4 || id_l[0] != 'L')
-    {
-        printf("Nie poprawna forma !\n");
-        printf("Lekarz (ID np. L001): ");
-        scanf(" %4[^\n]%*c", id_l);
-    }
-    char id_p[5];
-    printf("Pacjent (ID np. P001): ");
-    scanf(" %4[^\n]%*c", id_p);
-    while (strlen(id_p) != 4 || id_p[0] != 'P')
-    {
-        printf("Nie poprawna forma !\n");
-        printf("Pacjent (ID np. P001): ");
-        scanf(" %4[^\n]%*c", id_p);
-    }
+    czas_wizyty = (double)godz + (double)min/100;
+    } while (czas_wizyty > czas_zakonczenia_pracy || czas_wizyty < czas_rozpoczecia_pracy);
+
     
     dodajWizyteNaKoniec(glowny, g_lekarz, g_pacjent, d, m, r, godz, min, id_l, id_p);
     printf("\n");
 }
 
+/// Funkcja generujIDWizyta
+/**
+* Funkcja generuje i zwraca orginalne ID wizyty.
+* 
+*/
 char * generujIDWizyta(struct Wizyta *glowny) {
     char *str = malloc(5);
     str[0] = 'W';
@@ -384,6 +481,11 @@ char * generujIDWizyta(struct Wizyta *glowny) {
     return str;
 }
 
+/// Funkcja sprawdzIDWizyta
+/**
+* Funkcja sprawdza, czy ID wizyty jest orginalne.
+* Funkcja zwraca 1 (Fałsz) lub 0 (Prawda).
+*/
 int sprawdzIDWizyta(struct Wizyta *glowny, char id[5]) {
     int czastkowa = 0;
     struct Wizyta *node = glowny;
@@ -397,6 +499,11 @@ int sprawdzIDWizyta(struct Wizyta *glowny, char id[5]) {
     return 0;
 }
 
+/// Funkcja wybranaWizyta
+/**
+* Funkcja zwraca wizytę o podanym w drugim argumencie ID.
+* 
+*/
 struct Wizyta * wybranaWizyta(struct Wizyta *head, char wizyta[5]) {
     struct Wizyta *tmp = head;
     while (tmp != NULL)
@@ -416,6 +523,11 @@ struct Wizyta * wybranaWizyta(struct Wizyta *head, char wizyta[5]) {
 
 
     // Funkcja formatujaca dane lekarza
+/// Funkcja strFFileWizyta
+/**
+* Funkcja tworzy i zwraca ciag znaków z danymi wizyty, w formacie odpowiednim do zapisu do pliku.
+* 
+*/
 char * strFFileWizyta(struct Wizyta *glowny) {
     int dlugosc = 200;
     char *str = malloc(dlugosc);
@@ -447,6 +559,11 @@ char * strFFileWizyta(struct Wizyta *glowny) {
 }
 
     // Funkcja zapisu do pliku
+/// Funkcja ZapiszWizyty
+/**
+* Funkcja zapisuje listę wizyt do pliku "lista_wizyt.txt" w folderze "dane".
+* 
+*/
 void ZapiszWizyty(FILE *file, struct Wizyta *glowny) {
     if ((file = fopen("dane/lista_wizyt.txt", "w")) == NULL) {
         printf ("Nie mogę otworzyć pliku lista_wizyt.txt do zapisu !\n");
@@ -468,6 +585,11 @@ void ZapiszWizyty(FILE *file, struct Wizyta *glowny) {
 }
 
     // Funkcja odczytu z pliku
+/// Funkcja OdczytajWizyty
+/**
+* Funkcja odczytuje listę wizyt z pliku "lista_wizyt.txt" w folderze "dane".
+* 
+*/
 void OdczytajWizyty(FILE *file, struct Wizyta **glowny, struct Lekarz *head_lekarz, struct Pacjent *head_pacjent) {
     if ((file = fopen("dane/lista_wizyt.txt", "r")) == NULL) {
         printf ("Nie mogę otworzyć pliku lista_wizyt.txt do odczytu !\n");
@@ -509,7 +631,6 @@ void OdczytajWizyty(FILE *file, struct Wizyta **glowny, struct Lekarz *head_leka
         id_p[5] = '\0';
         
         nowaWizyta->pacjent = wybranyPacjent(head_pacjent, id_p);
-        wyswietlWizyte(nowaWizyta);
         nowaWizyta->poprzedni = nowaWizyta->nastepny = NULL;
 
         struct Wizyta *tmp = *glowny;

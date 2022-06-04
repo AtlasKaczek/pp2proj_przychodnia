@@ -14,8 +14,8 @@ struct Lekarz {
     char adres[40];
     char email[40];
     char tel[10];
-    unsigned int waga;
-    unsigned int wzrost;
+    struct Hour godzRozpoczeciaPracy;
+    struct Hour godzZakonczeniaPracy;
     char OddzialNFZ[60];
 
     struct Lekarz* nastepny;
@@ -24,7 +24,7 @@ struct Lekarz {
 
 // Funkcje Operacji Na Liscie Lekarzy
 
-void dodajLekarzaNaKoniec(struct Lekarz **glowny, char imie[], char nazwisko[], int dzien, int miesiac, int rok, char pesel[], char adres[], char tel[], unsigned int waga, unsigned int wzrost, char OddzialNFZ[]);
+void dodajLekarzaNaKoniec(struct Lekarz **glowny, char imie[], char nazwisko[], int dzien, int miesiac, int rok, char pesel[], char adres[], char tel[], int g_roz, int m_roz, int g_zak, int m_zak, char OddzialNFZ[]);
 void usunPierwszego(struct Lekarz **glowny);
 void usunOstatniego(struct Lekarz **glowny);
 void usunLekarza(struct Lekarz **glowny, char id[]);
