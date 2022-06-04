@@ -6,6 +6,11 @@
 #include "pacjent.h"
 #include "pomocnicze.h"
 
+/// Struktura listy wizyt
+/** 
+ * Zawiera wszystkie potrzebne zmienne do zaimplementowania listy dwukierunkowej i wszystkie dane wizyty.
+ * 
+*/
 struct Wizyta {
     
     char id[5];

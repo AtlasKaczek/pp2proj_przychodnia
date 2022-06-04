@@ -4,6 +4,11 @@
 
 #include "pomocnicze.h"
 
+///
+/** Funkcja generujEmail
+ * Zwraca ciąg znaków - email postaci (pierwsza litera imienia)(nazwisko)(platforma).
+ * 
+*/
 char * generujEmail(char imie[], char nazwisko[], char platforma[]) {
     int dlugosc = strlen(nazwisko) + strlen(platforma) + 1 + 1;
     

@@ -3,6 +3,11 @@
 
 #include "pomocnicze.h"
 
+/// Struktura listy pacjentów
+/** 
+ * Zawiera wszystkie potrzebne zmienne do zaimplementowania listy dwukierunkowej i wszystkie dane pacjenta.
+ * 
+*/
 struct Pacjent {
     char id[5];
     char imie[20];

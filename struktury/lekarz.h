@@ -5,6 +5,11 @@
 
 // Lista Lekarzy i odpowiednie funkcje
 
+/// Struktura listy lekarzy
+/** 
+ * Zawiera wszystkie potrzebne zmienne do zaimplementowania listy dwukierunkowej i wszystkie dane lekarza.
+ * 
+*/
 struct Lekarz {
     char id[5];
     char imie[20];
