@@ -459,7 +459,7 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
     int d, m, r;
     printf("Rok wizyty: ");
     scanf(" %d", &r);
-    while (r < 1900 || r > 2020)
+    while (r < 2020)
     {
         printf("Bledne dane!\nRok: ");
         scanf(" %d", &r);
