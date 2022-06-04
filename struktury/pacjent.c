@@ -128,7 +128,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
     
     case 4:
         int dob;
-        printf("Data urodzenia: %d/%d/%d -> \n", (*glowny)->dob.dzien), (*glowny)->dob.miesiac, (*glowny)->dob.rok);
+        printf("Data urodzenia: %d/%d/%d -> \n", (*glowny)->dob.dzien, (*glowny)->dob.miesiac, (*glowny)->dob.rok);
         printf("Rok: ");
         scanf(" %d", &dob);
         while (dob < 1900 || dob > 2020)
@@ -159,7 +159,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
                 (*glowny)->dob.dzien = dob;
 
             }
-            else if (miesiac == 2)
+            else if (dob == 2)
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
@@ -171,7 +171,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
                 (*glowny)->dob.dzien = dob;
 
             }
-            else
+            else if (dob == 4 || dob == 6 || dob == 9 || dob == 11)
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
@@ -181,8 +181,9 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
                     scanf(" %d", &dob);
                 }
                 (*glowny)->dob.dzien = dob;
+            }
         }
-	    else
+        else
         {
             printf("Miesiac: ");
             scanf(" %d", &dob);
@@ -203,7 +204,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
                 }
                 (*glowny)->dob.dzien = dob;
             }
-            else if (miesiac == 2)
+            else if (dob == 2)
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
@@ -213,6 +214,18 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
                     scanf(" %d", &dob);
                 }
                 (*glowny)->dob.dzien = dob;
+            }
+            else if (dob == 4 || dob == 6 || dob == 9 || dob == 11)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &dob);
+                while (dob < 0 || dob > 30)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &dob);
+                }
+                (*glowny)->dob.dzien = dob;
+            }
         }
         break;
     
@@ -231,7 +244,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
         break;
     
     case 7:
-        printf("Email: %s -> ", (*glowny)->email);
+        printf("Email: %s -> ", (*glowny)->email); 
         char email[40];
         scanf(" %39[^\n]%*c", email);
         strcpy((*glowny)->email, email);
