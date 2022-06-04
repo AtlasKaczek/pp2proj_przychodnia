@@ -288,31 +288,105 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
         break;
     
     case 2:
-        printf("Data: %d/%d/%d -> \n", (*glowny)->data.dzien, (*glowny)->data.miesiac, (*glowny)->data.rok);
-        printf("Dzien: ");
-        scanf(" %d", &data);
-        while (data < 0 || data > 31)
-        {
-            printf("Bledne dane!\nDzien: ");
-            scanf(" %d", &data);
-        } 
-        (*glowny)->data.dzien = data;
-        printf("Miesiac: ");
-        scanf(" %d", &data);
-        while (data < 1 || data > 12)
-        {
-            printf("Bledne dane!\nMiesiac: ");
-            scanf(" %d", &data);
-        }
-        (*glowny)->data.miesiac = data;
+        printf("Data wizyty: %d/%d/%d -> \n", (*glowny)->data.dzien, (*glowny)->data.miesiac, (*glowny)->data.rok);
         printf("Rok: ");
         scanf(" %d", &data);
-        while (data < 2022 || data > 3000)
+        while (data < 2021)
         {
             printf("Bledne dane!\nRok: ");
             scanf(" %d", &data);
         }
         (*glowny)->data.rok = data;
+	    if((data%4==0 && data%100!=0) || data%400==0)
+        {
+            printf("Miesiac: ");
+            scanf(" %d", &data);
+            while (data < 0 || data > 12)
+            {
+                printf("Bledne dane!\nMiesiac: ");
+                scanf(" %d", &data);
+            }
+            (*glowny)->data.miesiac = data;
+            if (data == 1 || data == 3 || data == 5 || data == 7 || data == 8 || data == 10 || data == 12)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &data);
+                while (data < 0 || data > 31)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &data);
+                }
+                (*glowny)->data.dzien = data;
+
+            }
+            else if (data == 2)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &data);
+                while (data < 0 || data > 29)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &data);
+                }
+                (*glowny)->data.dzien = data;
+
+            }
+            else if (data == 4 || data == 6 || data == 9 || data == 11)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &data);
+                while (data < 0 || data > 30)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &data);
+                }
+                (*glowny)->data.dzien = data;
+            }
+        }
+        else
+        {
+            printf("Miesiac: ");
+            scanf(" %d", &data);
+            while (data < 0 || data > 12)
+            {
+                printf("Bledne dane!\nMiesiac: ");
+                scanf(" %d", &data);
+            }
+            (*glowny)->data.miesiac = data;
+            if (data == 1 || data == 3 || data == 5 || data == 7 || data == 8 || data == 10 || data == 12)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &data);
+                while (data < 0 || data > 31)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &data);
+                }
+                (*glowny)->data.dzien = data;
+            }
+            else if (data == 2)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &data);
+                while (data < 0 || data > 28)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &data);
+                }
+                (*glowny)->data.dzien = data;
+            }
+            else if (data == 4 || data == 6 || data == 9 || data == 11)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &data);
+                while (data < 0 || data > 30)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &data);
+                }
+                (*glowny)->data.dzien = data;
+            }
+        }
         break;
     
     case 3:

@@ -219,32 +219,106 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
         break;
 
     case 4:
-        printf("Data urodzenia: %d/%d/%d -> \n", (*glowny)->dob.dzien, (*glowny)->dob.miesiac, (*glowny)->dob.rok);
         int dob;
-        printf("Dzien: ");
-        scanf(" %d", &dob);
-        while (dob < 0 || dob > 31)
-        {
-            printf("Bledne dane!\nDzien: ");
-            scanf(" %d", &dob);
-        }
-        (*glowny)->dob.dzien = dob;
-        printf("Miesiac: ");
-        scanf(" %d", &dob);
-        while (dob < 0 || dob > 12)
-        {
-            printf("Bledne dane!\nMiesiac: ");
-            scanf(" %d", &dob);
-        }
-        (*glowny)->dob.miesiac = dob;
+        printf("Data urodzenia: %d/%d/%d -> \n", (*glowny)->dob.dzien, (*glowny)->dob.miesiac, (*glowny)->dob.rok);
         printf("Rok: ");
         scanf(" %d", &dob);
         while (dob < 1900 || dob > 2020)
         {
-            printf("Bledne dane!\nMiesiac: ");
+            printf("Bledne dane!\nRok: ");
             scanf(" %d", &dob);
         }
         (*glowny)->dob.rok = dob;
+	    if((dob%4==0 && dob%100!=0) || dob%400==0)
+        {
+            printf("Miesiac: ");
+            scanf(" %d", &dob);
+            while (dob < 0 || dob > 12)
+            {
+                printf("Bledne dane!\nMiesiac: ");
+                scanf(" %d", &dob);
+            }
+            (*glowny)->dob.miesiac = dob;
+            if (dob == 1 || dob == 3 || dob == 5 || dob == 7 || dob == 8 || dob == 10 || dob == 12)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &dob);
+                while (dob < 0 || dob > 31)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &dob);
+                }
+                (*glowny)->dob.dzien = dob;
+
+            }
+            else if (dob == 2)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &dob);
+                while (dob < 0 || dob > 29)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &dob);
+                }
+                (*glowny)->dob.dzien = dob;
+
+            }
+            else if (dob == 4 || dob == 6 || dob == 9 || dob == 11)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &dob);
+                while (dob < 0 || dob > 30)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &dob);
+                }
+                (*glowny)->dob.dzien = dob;
+            }
+        }
+        else
+        {
+            printf("Miesiac: ");
+            scanf(" %d", &dob);
+            while (dob < 0 || dob > 12)
+            {
+                printf("Bledne dane!\nMiesiac: ");
+                scanf(" %d", &dob);
+            }
+            (*glowny)->dob.miesiac = dob;
+            if (dob == 1 || dob == 3 || dob == 5 || dob == 7 || dob == 8 || dob == 10 || dob == 12)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &dob);
+                while (dob < 0 || dob > 31)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &dob);
+                }
+                (*glowny)->dob.dzien = dob;
+            }
+            else if (dob == 2)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &dob);
+                while (dob < 0 || dob > 28)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &dob);
+                }
+                (*glowny)->dob.dzien = dob;
+            }
+            else if (dob == 4 || dob == 6 || dob == 9 || dob == 11)
+            {
+                printf("Dzien: ");
+                scanf(" %d", &dob);
+                while (dob < 0 || dob > 30)
+                {
+                    printf("Bledne dane!\nDzien: ");
+                    scanf(" %d", &dob);
+                }
+                (*glowny)->dob.dzien = dob;
+            }
+        }
         break;
 
     case 5:
