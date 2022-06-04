@@ -6,18 +6,21 @@
 #include "struktury/pacjent.h"
 #include "struktury/wizyty.h"
 
+///
+/** Funkcja main
+ * Zawiera wszystkie parametry potrzebne do prawidłowego działania programu.
+ * W tej funkcji znajduję się menu dla użytkownika.
+ *
+ */
 int main() {
 
     struct Lekarz *g_lekarz;
-    //g_lekarz = (struct Lekarz *)malloc(sizeof(struct Lekarz));
     g_lekarz = NULL;
 
     struct Pacjent *g_pacjent;
-    //g_pacjent = (struct Pacjent *)malloc(sizeof(struct Pacjent));
     g_pacjent = NULL;
 
     struct Wizyta *g_wizyta;
-    //g_wizyta = (struct Wizyta *)malloc(sizeof(struct Wizyta));
     g_wizyta = NULL;
 
     FILE *plik;

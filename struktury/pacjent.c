@@ -4,6 +4,12 @@
 
 #include "pacjent.h"
 
+/// Funkcja dodajPacjentaNaKoniec
+/**
+* Funkcja dodaje tworzy pacjenta na podstawie podanych argumentów i dodaje ją na koniec listy pacjentów.
+* Funkcja nic nie zwraca.
+*
+*/
 void dodajPacjentaNaKoniec(struct Pacjent **glowny, char imie[], char nazwisko[], int dzien, int miesiac, int rok, char pesel[], char adres[], char email[], char tel[], unsigned int waga, unsigned int wzrost) {
 
     struct Pacjent *nowyPacjent = (struct Pacjent *)malloc(sizeof(struct Pacjent));
@@ -38,6 +44,12 @@ void dodajPacjentaNaKoniec(struct Pacjent **glowny, char imie[], char nazwisko[]
     nowyPacjent->poprzedni = tmp;
 }
 
+/// Funkcja usunPierwszegoPacjenta
+/**
+* Funkcja usuwa pierwszego pacjenta z listy pacjentów.
+* Funkcja nic nie zwraca.
+*
+*/
 void usunPierwszegoPacjenta(struct Pacjent **glowny) {
     
 	struct Pacjent *tmp = *glowny;
@@ -50,6 +62,12 @@ void usunPierwszegoPacjenta(struct Pacjent **glowny) {
     free(tmp);
 }
 
+/// Funkcja usunOstatniegoPacjenta
+/**
+* Funkcja usuwa ostatniego pacjenta z listy pacjentów.
+* Funkcja nic nie zwraca.
+*
+*/
 void usunOstatniegoPacjenta(struct Pacjent **glowny) {
     struct Pacjent *tmp;
     if ((*glowny) == NULL)
@@ -68,6 +86,12 @@ void usunOstatniegoPacjenta(struct Pacjent **glowny) {
     }
 }
 
+/// Funkcja usunPacjenta
+/**
+* Funkcja usuwa pacjenta z listy pacjentów na podstawie drugiego argumentu - ID pacjenta postaci P000.
+* Funkcja nic nie zwraca.
+*
+*/
 void usunPacjenta (struct Pacjent **glowny, char id[]) {
     int liczba = 2;
     if (strcmp( id, (*glowny)->id) == 0 || liczbaPacjentow(*glowny) == 1)
@@ -95,8 +119,13 @@ void usunPacjenta (struct Pacjent **glowny, char id[]) {
 
 }
 
+/// Funkcja edytujPacjenta
+/**
+* Funkcja pozwala edytować dane pole pacjenta.
+* Funkcja nic nie zwraca.
+*/
 void edytujPacjenta(struct Pacjent **glowny, int opcja) {
-    
+    int dob;
     switch (opcja)
     {
     case 1:
@@ -127,7 +156,6 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
         break;
     
     case 4:
-        int dob;
         printf("Data urodzenia: %d/%d/%d -> \n", (*glowny)->dob.dzien, (*glowny)->dob.miesiac, (*glowny)->dob.rok);
         printf("Rok: ");
         scanf(" %d", &dob);
@@ -141,7 +169,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
         {
             printf("Miesiac: ");
             scanf(" %d", &dob);
-            while (dob < 0 || dob > 12)
+            while (dob < 1 || dob > 12)
             {
                 printf("Bledne dane!\nMiesiac: ");
                 scanf(" %d", &dob);
@@ -151,7 +179,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 31)
+                while (dob < 1 || dob > 31)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -163,7 +191,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 29)
+                while (dob < 1 || dob > 29)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -175,7 +203,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 30)
+                while (dob < 1 || dob > 30)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -187,7 +215,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
         {
             printf("Miesiac: ");
             scanf(" %d", &dob);
-            while (dob < 0 || dob > 12)
+            while (dob < 1 || dob > 12)
             {
                 printf("Bledne dane!\nMiesiac: ");
                 scanf(" %d", &dob);
@@ -197,7 +225,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 31)
+                while (dob < 1 || dob > 31)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -208,7 +236,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 28)
+                while (dob < 1 || dob > 28)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -219,7 +247,7 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 30)
+                while (dob < 1 || dob > 30)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -277,6 +305,11 @@ void edytujPacjenta(struct Pacjent **glowny, int opcja) {
     printf("\n");
 }
 
+/// Funkcja dodajPacjenta
+/**
+* Funkcja stworzona z myślą o użytkowniku. Pozwala stworzyć pacjenta po wprowadzeniu przez użytkownika danych.
+* Funkcja nic nie zwraca.
+*/
 void dodajPacjenta(struct Pacjent **glowny) {
     printf("\nDodaj pacjenta:\n");
             char imie[20];
@@ -297,7 +330,7 @@ void dodajPacjenta(struct Pacjent **glowny) {
             {
                 printf("Miesiac urodzenia: ");
                 scanf(" %d", &m);
-                while (m < 0 || m > 12)
+                while (m < 1 || m > 12)
                 {
                     printf("Bledne dane!\nMiesiac: ");
                     scanf(" %d", &m);
@@ -306,7 +339,7 @@ void dodajPacjenta(struct Pacjent **glowny) {
                 {
                     printf("Dzien urodzenia: ");
                     scanf(" %d", &d);
-                    while (d < 0 || d > 31)
+                    while (d < 1 || d > 31)
                     {
                         printf("Bledne dane!\nDzien: ");
                         scanf(" %d", &d);
@@ -316,7 +349,7 @@ void dodajPacjenta(struct Pacjent **glowny) {
                 {
                     printf("Dzien urodzenia: ");
                     scanf(" %d", &d);
-                    while (d < 0 || d > 29)
+                    while (d < 1 || d > 29)
                     {
                         printf("Bledne dane!\nDzien: ");
                         scanf(" %d", &d);
@@ -326,7 +359,7 @@ void dodajPacjenta(struct Pacjent **glowny) {
                 {
                     printf("Dzien: ");
                     scanf(" %d", &d);
-                    while (d < 0 || d > 30)
+                    while (d < 1 || d > 30)
                     {
                         printf("Bledne dane!\nDzien: ");
                         scanf(" %d", &d);
@@ -337,7 +370,7 @@ void dodajPacjenta(struct Pacjent **glowny) {
             {
                 printf("Miesiac urodzenia: ");
                 scanf(" %d", &m);
-                while (m < 0 || m > 12)
+                while (m < 1 || m > 12)
                 {
                     printf("Bledne dane!\nMiesiac: ");
                     scanf(" %d", &m);
@@ -346,7 +379,7 @@ void dodajPacjenta(struct Pacjent **glowny) {
                 {
                     printf("Dzien urodzenia: ");
                     scanf(" %d", &d);
-                    while (d < 0 || d > 31)
+                    while (d < 1 || d > 31)
                     {
                         printf("Bledne dane!\nDzien: ");
                         scanf(" %d", &d);
@@ -356,7 +389,7 @@ void dodajPacjenta(struct Pacjent **glowny) {
                 {
                     printf("Dzien urodzenia: ");
                     scanf(" %d", &d);
-                    while (d < 0 || d > 28)
+                    while (d < 1 || d > 28)
                     {
                         printf("Bledne dane!\nDzien: ");
                         scanf(" %d", &d);
@@ -366,7 +399,7 @@ void dodajPacjenta(struct Pacjent **glowny) {
                 {
                     printf("Dzien urodzenia: ");
                     scanf(" %d", &d);
-                    while (d < 0 || d > 30)
+                    while (d < 1 || d > 30)
                     {
                         printf("Bledne dane!\nDzien: ");
                         scanf(" %d", &d);
@@ -399,6 +432,12 @@ void dodajPacjenta(struct Pacjent **glowny) {
             printf("\n");
 }
 
+/// Funkcja strFormatPacjent
+/**
+* Funkcja tworzy i zwraca ciąg znaków zawierający dane konkretnego pacjenta.
+* Funkcja wykorzystywana podczas wyświetlania listy pacjentów.
+*
+*/
 char * strFormatPacjent(struct Pacjent *glowny) {
     int dlugosc = 200;
     char * str = malloc(dlugosc);
@@ -459,6 +498,11 @@ char * strFormatPacjent(struct Pacjent *glowny) {
     return str;
 }
 
+/// Funkcja wyswietlPacjentow
+/**
+* Funkcja wyświetla listę pacjentów.
+* Funkcja nic nie zwraca.
+*/
 void wyswietlPacjentow(struct Pacjent *glowny) {
 
     if (glowny == NULL) printf("\nLista pacjentow jest pusta.\n");
@@ -472,10 +516,20 @@ void wyswietlPacjentow(struct Pacjent *glowny) {
 
 }
 
+/// Funkcja wyswietlPacjenta
+/**
+* Funkcja wyświetla konkretngo pacjenta.
+* Funkcja nic nie zwraca.
+*/
 void wyswietlPacjenta(struct Pacjent *glowny) {
     printf("1. ID: %s\n2. Imie: %s\n3. Nazwisko: %s\n4. Dzien urodzenia: %d/%d/%d\n5. PESEL: %s\n6. Adres zamieszkania: %s\n7. Email: %s\n8. Telefon: %s\n9. Waga: %d\n10. Wzrost: %d\n\n", glowny->id, glowny->imie, glowny->nazwisko, glowny->dob.dzien, glowny->dob.miesiac, glowny->dob.rok, glowny->pesel, glowny->adres, glowny->email, glowny->tel, glowny->waga, glowny->wzrost);
 }
 
+/// Funkcja edytujPacjentaMenu
+/**
+* Funkcja stworzona z myślą o użytkowniku. Pozwala wybrać pacjenta i jego konkretne pole, a następnie edytować je.
+* Funkcja nic nie zwraca.
+*/
 void edytujPacjentaMenu(struct Pacjent **glowny) {
     
     char id[5];
@@ -515,6 +569,12 @@ void edytujPacjentaMenu(struct Pacjent **glowny) {
     printf("Pomyslnie edytowano pacjenta .\n");
 }
 
+/// Funkcja liczbaPacjentow
+/**
+* Funkcja zlicza aktualną liczbę pacjentów w liście pacjentów i zwraca tą liczbę.
+*
+*
+*/
 int liczbaPacjentow(struct Pacjent *glowny) {
     int liczba = 0;
     if (glowny == NULL) return 0;
@@ -527,6 +587,11 @@ int liczbaPacjentow(struct Pacjent *glowny) {
     return liczba;
 }
 
+/// Funkcja generujIDPacjent
+/**
+* Funkcja generuje i zwraca orginalne ID pacjenta.
+* 
+*/
 char * generujIDPacjent(struct Pacjent *glowny) {
     char *str = malloc(5);
     str[0] = 'P';
@@ -548,6 +613,11 @@ char * generujIDPacjent(struct Pacjent *glowny) {
     return str;
 }
 
+/// Funkcja sprawdzIDPacjent
+/**
+* Funkcja sprawdza, czy ID pacjenta jest orginalne.
+* Funkcja zwraca 1 (Fałsz) lub 0 (Prawda).
+*/
 int sprawdzIDPacjent(struct Pacjent *glowny, char id[5]) {
     int czastkowa = 0;
     struct Pacjent *node = glowny;
@@ -561,6 +631,11 @@ int sprawdzIDPacjent(struct Pacjent *glowny, char id[5]) {
     return 0;
 }
 
+/// Funkcja wybranyPacjent
+/**
+* Funkcja zwraca pacjenta o podanym w drugim argumencie ID.
+* 
+*/
 struct Pacjent * wybranyPacjent(struct Pacjent *head, char pacjent[5]) {
     struct Pacjent *tmp = head;
     while (tmp != NULL)
@@ -576,6 +651,11 @@ struct Pacjent * wybranyPacjent(struct Pacjent *head, char pacjent[5]) {
     return NULL;
 }
 
+/// Funkcja strFFilePacjent
+/**
+* Funkcja tworzy i zwraca ciag znaków z danymi pacjenta, w formacie odpowiednim do zapisu do pliku.
+* 
+*/
 char * strFFilePacjent(struct Pacjent *glowny) {
     int dlugosc = 200;
     char *str = malloc(dlugosc);
@@ -614,6 +694,11 @@ char * strFFilePacjent(struct Pacjent *glowny) {
     return str;
 }
 
+/// Funkcja ZapiszPacjentow
+/**
+* Funkcja zapisuje listę pacjentów do pliku "lista_pacjentow.txt" w folderze "dane".
+* 
+*/
 void ZapiszPacjentow(FILE *file, struct Pacjent *glowny) {
     if ((file = fopen("dane/lista_pacjentow.txt", "w")) == NULL) {
         printf ("Nie mogę otworzyć pliku lista_pacjentow.txt do zapisu !\n");
@@ -634,6 +719,11 @@ void ZapiszPacjentow(FILE *file, struct Pacjent *glowny) {
     fclose(file);
 }
 
+/// Funkcja OdczytajPacjentow
+/**
+* Funkcja odczytuje listę pacjentów z pliku "lista_pacjentow.txt" w folderze "dane".
+* 
+*/
 void OdczytajPacjentow(FILE *file, struct Pacjent **glowny) {
     if ((file = fopen("dane/lista_pacjentow.txt", "r")) == NULL) {
         printf ("Nie mogę otworzyć pliku lista_pacjentow.txt do odczytu !\n");

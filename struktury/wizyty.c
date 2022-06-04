@@ -301,7 +301,7 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
         {
             printf("Miesiac: ");
             scanf(" %d", &data);
-            while (data < 0 || data > 12)
+            while (data < 1 || data > 12)
             {
                 printf("Bledne dane!\nMiesiac: ");
                 scanf(" %d", &data);
@@ -311,7 +311,7 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
             {
                 printf("Dzien: ");
                 scanf(" %d", &data);
-                while (data < 0 || data > 31)
+                while (data < 1 || data > 31)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &data);
@@ -323,7 +323,7 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
             {
                 printf("Dzien: ");
                 scanf(" %d", &data);
-                while (data < 0 || data > 29)
+                while (data < 1 || data > 29)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &data);
@@ -335,7 +335,7 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
             {
                 printf("Dzien: ");
                 scanf(" %d", &data);
-                while (data < 0 || data > 30)
+                while (data < 1 || data > 30)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &data);
@@ -347,7 +347,7 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
         {
             printf("Miesiac: ");
             scanf(" %d", &data);
-            while (data < 0 || data > 12)
+            while (data < 1 || data > 12)
             {
                 printf("Bledne dane!\nMiesiac: ");
                 scanf(" %d", &data);
@@ -357,7 +357,7 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
             {
                 printf("Dzien: ");
                 scanf(" %d", &data);
-                while (data < 0 || data > 31)
+                while (data < 1 || data > 31)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &data);
@@ -368,7 +368,7 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
             {
                 printf("Dzien: ");
                 scanf(" %d", &data);
-                while (data < 0 || data > 28)
+                while (data < 1 || data > 28)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &data);
@@ -379,7 +379,7 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
             {
                 printf("Dzien: ");
                 scanf(" %d", &data);
-                while (data < 0 || data > 30)
+                while (data < 1 || data > 30)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &data);
@@ -468,7 +468,7 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
     {
         printf("Miesiac wizyty: ");
         scanf(" %d", &m);
-        while (m < 0 || m > 12)
+        while (m < 1 || m > 12)
         {
             printf("Bledne dane!\nMiesiac: ");
             scanf(" %d", &m);
@@ -477,7 +477,7 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
         {
             printf("Dzien wizyty: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 31)
+            while (d < 1 || d > 31)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -487,7 +487,7 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
         {
             printf("Dzien wizyty: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 29)
+            while (d < 1 || d > 29)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -497,7 +497,7 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
         {
             printf("Dzien wizyty: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 30)
+            while (d < 1 || d > 30)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -508,7 +508,7 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
     {
         printf("Miesiac wizyty: ");
         scanf(" %d", &m);
-        while (m < 0 || m > 12)
+        while (m < 1 || m > 12)
         {
             printf("Bledne dane!\nMiesiac: ");
             scanf(" %d", &m);
@@ -517,7 +517,7 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
         {
             printf("Dzien wizyty: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 31)
+            while (d < 1 || d > 31)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -527,7 +527,7 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
         {
             printf("Dzien wizyty: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 28)
+            while (d < 1 || d > 28)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -537,7 +537,7 @@ void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent
         {
             printf("Dzien wizyty: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 30)
+            while (d < 1 || d > 30)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);

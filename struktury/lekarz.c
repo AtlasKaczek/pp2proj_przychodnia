@@ -7,6 +7,12 @@
 
 // Funkcje Operacji Na Liscie Lekarzy
 
+/// Funkcja sprawdzEmail
+/**
+* Funkcja generuje i sprawdza email, tak aby był unikalny.
+* Funkcja zwraca ciag znaków zawierający email dla lekarza.
+*
+*/
 char *sprawdzEmail(struct Lekarz *head, char imie[], char nazwisko[])
 {
     char *mail = malloc(40);
@@ -32,6 +38,12 @@ char *sprawdzEmail(struct Lekarz *head, char imie[], char nazwisko[])
     return mail;
 }
 
+/// Funkcja dodajLekarzaNaKoniec
+/**
+* Funkcja dodaje tworzy lekarza na podstawie podanych argumentów i dodaje ją na koniec listy lekarzy.
+* Funkcja nic nie zwraca.
+*
+*/
 void dodajLekarzaNaKoniec(struct Lekarz **glowny, char imie[], char nazwisko[], int dzien, int miesiac, int rok, char pesel[], char adres[], char tel[], int g_roz, int m_roz, int g_zak, int m_zak, char OddzialNFZ[])
 {
 
@@ -72,6 +84,12 @@ void dodajLekarzaNaKoniec(struct Lekarz **glowny, char imie[], char nazwisko[], 
     nowyLekarz->poprzedni = tmp;
 }
 
+/// Funkcja usunPierwszego
+/**
+* Funkcja usuwa pierwszego lekarza z listy lekarzy.
+* Funkcja nic nie zwraca.
+*
+*/
 void usunPierwszego(struct Lekarz **glowny)
 {
 
@@ -87,6 +105,12 @@ void usunPierwszego(struct Lekarz **glowny)
     free(tmp);
 }
 
+/// Funkcja usunOstatniego
+/**
+* Funkcja usuwa ostatniego lekarza z listy lekarzy.
+* Funkcja nic nie zwraca.
+*
+*/
 void usunOstatniego(struct Lekarz **glowny)
 {
     struct Lekarz *tmp;
@@ -111,6 +135,12 @@ void usunOstatniego(struct Lekarz **glowny)
     }
 }
 
+/// Funkcja usunLekarza
+/**
+* Funkcja usuwa lekarza z listy lekarzy na podstawie drugiego argumentu - ID lekarza postaci L000.
+* Funkcja nic nie zwraca.
+*
+*/
 void usunLekarza(struct Lekarz **glowny, char id[])
 {
     int liczba = 2;
@@ -143,6 +173,11 @@ void usunLekarza(struct Lekarz **glowny, char id[])
     }
 }
 
+/// Funkcja edytujLekarzaMenu
+/**
+* Funkcja stworzona z myślą o użytkowniku. Pozwala wybrać lekarza i jego konkretne pole, a następnie edytować je.
+* Funkcja nic nie zwraca.
+*/
 void edytujLekarzaMenu(struct Lekarz **glowny)
 {
 
@@ -185,9 +220,15 @@ void edytujLekarzaMenu(struct Lekarz **glowny)
     printf("Pomyslnie edytowano lekarza .\n");
 }
 
+/// Funkcja edytujLekarza
+/**
+* Funkcja pozwala edytować dane pole lekarza.
+* Funkcja nic nie zwraca.
+*/
 void edytujLekarza(struct Lekarz **glowny, int opcja)
 {
     int data;
+    int dob;
     switch (opcja)
     {
     case 1:
@@ -219,7 +260,6 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
         break;
 
     case 4:
-        int dob;
         printf("Data urodzenia: %d/%d/%d -> \n", (*glowny)->dob.dzien, (*glowny)->dob.miesiac, (*glowny)->dob.rok);
         printf("Rok: ");
         scanf(" %d", &dob);
@@ -233,7 +273,7 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
         {
             printf("Miesiac: ");
             scanf(" %d", &dob);
-            while (dob < 0 || dob > 12)
+            while (dob < 1 || dob > 12)
             {
                 printf("Bledne dane!\nMiesiac: ");
                 scanf(" %d", &dob);
@@ -243,7 +283,7 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 31)
+                while (dob < 1 || dob > 31)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -255,7 +295,7 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 29)
+                while (dob < 1 || dob > 29)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -267,7 +307,7 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 30)
+                while (dob < 1 || dob > 30)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -279,7 +319,7 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
         {
             printf("Miesiac: ");
             scanf(" %d", &dob);
-            while (dob < 0 || dob > 12)
+            while (dob < 1 || dob > 12)
             {
                 printf("Bledne dane!\nMiesiac: ");
                 scanf(" %d", &dob);
@@ -289,7 +329,7 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 31)
+                while (dob < 1 || dob > 31)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -300,7 +340,7 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 28)
+                while (dob < 1 || dob > 28)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -311,7 +351,7 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
             {
                 printf("Dzien: ");
                 scanf(" %d", &dob);
-                while (dob < 0 || dob > 30)
+                while (dob < 1 || dob > 30)
                 {
                     printf("Bledne dane!\nDzien: ");
                     scanf(" %d", &dob);
@@ -401,7 +441,11 @@ void edytujLekarza(struct Lekarz **glowny, int opcja)
     }
     printf("\n");
 }
-
+/// Funkcja dodajLekarza
+/**
+* Funkcja stworzona z myślą o użytkowniku. Pozwala stworzyć lekarza po wprowadzeniu przez użytkownika danych.
+* Funkcja nic nie zwraca.
+*/
 void dodajLekarza(struct Lekarz **glowny)
 {
     printf("\nDodaj lekarza:\n");
@@ -423,7 +467,7 @@ void dodajLekarza(struct Lekarz **glowny)
     {
         printf("Miesiac urodzenia: ");
         scanf(" %d", &m);
-        while (m < 0 || m > 12)
+        while (m < 1 || m > 12)
         {
             printf("Bledne dane!\nMiesiac: ");
             scanf(" %d", &m);
@@ -432,7 +476,7 @@ void dodajLekarza(struct Lekarz **glowny)
         {
             printf("Dzien urodzenia: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 31)
+            while (d < 1 || d > 31)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -442,7 +486,7 @@ void dodajLekarza(struct Lekarz **glowny)
         {
             printf("Dzien urodzenia: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 29)
+            while (d < 1 || d > 29)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -452,7 +496,7 @@ void dodajLekarza(struct Lekarz **glowny)
         {
             printf("Dzien: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 30)
+            while (d < 1 || d > 30)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -463,7 +507,7 @@ void dodajLekarza(struct Lekarz **glowny)
     {
         printf("Miesiac urodzenia: ");
         scanf(" %d", &m);
-        while (m < 0 || m > 12)
+        while (m < 1 || m > 12)
         {
             printf("Bledne dane!\nMiesiac: ");
             scanf(" %d", &m);
@@ -472,7 +516,7 @@ void dodajLekarza(struct Lekarz **glowny)
         {
             printf("Dzien urodzenia: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 31)
+            while (d < 1 || d > 31)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -482,7 +526,7 @@ void dodajLekarza(struct Lekarz **glowny)
         {
             printf("Dzien urodzenia: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 28)
+            while (d < 1 || d > 28)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -492,7 +536,7 @@ void dodajLekarza(struct Lekarz **glowny)
         {
             printf("Dzien urodzenia: ");
             scanf(" %d", &d);
-            while (d < 0 || d > 30)
+            while (d < 1 || d > 30)
             {
                 printf("Bledne dane!\nDzien: ");
                 scanf(" %d", &d);
@@ -552,6 +596,12 @@ void dodajLekarza(struct Lekarz **glowny)
 
 // Funkcje Dodatkowe Dla Listy Lekarzy
 
+/// Funkcja strFormat
+/**
+* Funkcja tworzy i zwraca ciąg znaków zawierający dane konkretnego lekarza.
+* Funkcja wykorzystywana podczas wyświetlania listy lekarzy.
+*
+*/
 char *strFormat(struct Lekarz *glowny)
 {
     int dlugosc = 200;
@@ -619,7 +669,7 @@ char *strFormat(struct Lekarz *glowny)
     }
     sprintf(intos, "%d", glowny->godzRozpoczeciaPracy.minuta);
     strcat(str, intos);
-    strcat(str, "  ");
+    strcat(str, "       ");
     if (glowny->godzZakonczeniaPracy.godzina < 10)
     {
         sprintf(intos, "%d", 0);
@@ -635,7 +685,7 @@ char *strFormat(struct Lekarz *glowny)
     }
     sprintf(intos, "%d", glowny->godzZakonczeniaPracy.minuta);
     strcat(str, intos);
-    strcat(str, "  ");
+    strcat(str, "       ");
     strcat(str, glowny->OddzialNFZ);
     if (str[strlen(str) - 1] == '\n')
     {
@@ -645,6 +695,11 @@ char *strFormat(struct Lekarz *glowny)
     return str;
 }
 
+/// Funkcja wyswietlLekarzy
+/**
+* Funkcja wyświetla listę lekarzy.
+* Funkcja nic nie zwraca.
+*/
 void wyswietlLekarzy(struct Lekarz *glowny)
 {
 
@@ -661,11 +716,22 @@ void wyswietlLekarzy(struct Lekarz *glowny)
     }
 }
 
+/// Funkcja wyswietlLekarza
+/**
+* Funkcja wyświetla konkretngo lekarza.
+* Funkcja nic nie zwraca.
+*/
 void wyswietlLekarza(struct Lekarz *glowny)
 {
     printf("1. ID: %s\n2. Imie: %s\n3. Nazwisko: %s\n4. Dzien urodzenia: %d/%d/%d\n5. PESEL: %s\n6. Adres zamieszkania: %s\n7. Email: %s\n8. Telefon: %s\n9. Godz. rozpoczecia pracy: %d:%d\n10. Godz. zakonczenia pracy: %d:%d\n11. Oddzial NFZ: %s\n\n", glowny->id, glowny->imie, glowny->nazwisko, glowny->dob.dzien, glowny->dob.miesiac, glowny->dob.rok, glowny->pesel, glowny->adres, glowny->email, glowny->tel, glowny->godzRozpoczeciaPracy.godzina, glowny->godzRozpoczeciaPracy.minuta, glowny->godzZakonczeniaPracy.godzina, glowny->godzZakonczeniaPracy.minuta, glowny->OddzialNFZ);
 }
 
+/// Funkcja liczbaLekarzy
+/**
+* Funkcja zlicza aktualną liczbę lekarzy w liście lekarzy i zwraca tą liczbę.
+*
+*
+*/
 int liczbaLekarzy(struct Lekarz *glowny)
 {
     int liczba = 0;
@@ -682,6 +748,11 @@ int liczbaLekarzy(struct Lekarz *glowny)
     return liczba;
 }
 
+/// Funkcja generujIDLekarz
+/**
+* Funkcja generuje i zwraca orginalne ID lekarza.
+* 
+*/
 char *generujIDLekarz(struct Lekarz *glowny)
 {
     char *str = malloc(5);
@@ -706,6 +777,11 @@ char *generujIDLekarz(struct Lekarz *glowny)
     return str;
 }
 
+/// Funkcja sprawdzIDWizyta
+/**
+* Funkcja sprawdza, czy ID lekarza jest orginalne.
+* Funkcja zwraca 1 (Fałsz) lub 0 (Prawda).
+*/
 int sprawdzIDLekarz(struct Lekarz *glowny, char id[5])
 {
     struct Lekarz *node = glowny;
@@ -721,6 +797,11 @@ int sprawdzIDLekarz(struct Lekarz *glowny, char id[5])
     return 0;
 }
 
+/// Funkcja wybranyLekarz
+/**
+* Funkcja zwraca lekarza o podanym w drugim argumencie ID.
+* 
+*/
 struct Lekarz *wybranyLekarz(struct Lekarz *head, char lekarz[5])
 {
     struct Lekarz *tmp = head;
@@ -740,6 +821,12 @@ struct Lekarz *wybranyLekarz(struct Lekarz *head, char lekarz[5])
 // Funkcje Zapisu I Odczytu Listy Lekarzy
 
 // Funkcja formatujaca dane lekarza
+
+/// Funkcja strFFileLekarz
+/**
+* Funkcja tworzy i zwraca ciag znaków z danymi lekarza, w formacie odpowiednim do zapisu do pliku.
+* 
+*/
 char *strFFileLekarz(struct Lekarz *glowny)
 {
     int dlugosc = 200;
@@ -787,6 +874,12 @@ char *strFFileLekarz(struct Lekarz *glowny)
 }
 
 // Funkcja zapisu do pliku
+
+/// Funkcja ZapiszLekarzy
+/**
+* Funkcja zapisuje listę lekarzy do pliku "lista_lekarzy.txt" w folderze "dane".
+* 
+*/
 void ZapiszLekarzy(FILE *file, struct Lekarz *glowny)
 {
     if ((file = fopen("dane/lista_lekarzy.txt", "w")) == NULL)
@@ -816,6 +909,12 @@ void ZapiszLekarzy(FILE *file, struct Lekarz *glowny)
 }
 
 // Funkcja odczytu z pliku
+
+/// Funkcja OdczytajLekarzy
+/**
+* Funkcja odczytuje listę lekarzy z pliku "lista_lekarzy.txt" w folderze "dane".
+* 
+*/
 void OdczytajLekarzy(FILE *file, struct Lekarz **glowny)
 {
     if ((file = fopen("dane/lista_lekarzy.txt", "r")) == NULL)
