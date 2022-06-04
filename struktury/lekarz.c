@@ -412,26 +412,92 @@ void dodajLekarza(struct Lekarz **glowny)
     printf("Nazwisko: ");
     scanf(" %19[^\n]%*c", nazwisko);
     int d, m, r;
-    printf("Dzien urodzenia\nDzien: ");
-    scanf(" %d", &d);
-    while (d < 0 || d > 31)
-    {
-        printf("Bledne dane!\nDzien: ");
-        scanf(" %d", &d);
-    }
-    printf("Miesiac: ");
-    scanf(" %d", &m);
-    while (m < 0 || m > 12)
-    {
-        printf("Bledne dane!\nMiesiac: ");
-        scanf(" %d", &m);
-    }
-    printf("Rok: ");
+    printf("Rok urodzenia: ");
     scanf(" %d", &r);
     while (r < 1900 || r > 2020)
     {
         printf("Bledne dane!\nRok: ");
         scanf(" %d", &r);
+    }
+    if ((r % 4 == 0 && r % 100 != 0) || r % 400 == 0)
+    {
+        printf("Miesiac urodzenia: ");
+        scanf(" %d", &m);
+        while (m < 0 || m > 12)
+        {
+            printf("Bledne dane!\nMiesiac: ");
+            scanf(" %d", &m);
+        }
+        if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
+        {
+            printf("Dzien urodzenia: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 31)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+        else if (m == 2)
+        {
+            printf("Dzien urodzenia: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 29)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+        else if (m == 4 || m == 6 || m == 9 || m == 11)
+        {
+            printf("Dzien: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 30)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+    }
+    else
+    {
+        printf("Miesiac urodzenia: ");
+        scanf(" %d", &m);
+        while (m < 0 || m > 12)
+        {
+            printf("Bledne dane!\nMiesiac: ");
+            scanf(" %d", &m);
+        }
+        if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
+        {
+            printf("Dzien urodzenia: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 31)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+        else if (m == 2)
+        {
+            printf("Dzien urodzenia: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 28)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+        else if (m == 4 || m == 6 || m == 9 || m == 11)
+        {
+            printf("Dzien urodzenia: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 30)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
     }
     char pesel[12];
     printf("PESEL: ");

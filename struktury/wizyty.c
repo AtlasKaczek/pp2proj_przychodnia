@@ -457,27 +457,93 @@ void edytujWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjen
 void dodajWizyte(struct Wizyta **glowny, struct Lekarz *g_lekarz, struct Pacjent *g_pacjent) {
     printf("\nDodaj wizyte:\n");
     int d, m, r;
-    printf("Dzien wizyty\nDzien: ");
-    scanf(" %d", &d);
-    while (d < 0 || d > 31)
-    {
-        printf("Bledne dane!\nDzien: ");
-        scanf(" %d", &d);
-    }   
-    printf("Miesiac: ");
-    scanf(" %d", &m);
-    while (m < 1 || m > 12)
-    {
-        printf("Bledne dane!\nMiesiac: ");
-        scanf(" %d", &m);
-    } 
-    printf("Rok: ");
+    printf("Rok wizyty: ");
     scanf(" %d", &r);
-    while (r < 2022 || r > 3000)
+    while (r < 1900 || r > 2020)
     {
         printf("Bledne dane!\nRok: ");
         scanf(" %d", &r);
-    } 
+    }
+    if ((r % 4 == 0 && r % 100 != 0) || r % 400 == 0)
+    {
+        printf("Miesiac wizyty: ");
+        scanf(" %d", &m);
+        while (m < 0 || m > 12)
+        {
+            printf("Bledne dane!\nMiesiac: ");
+            scanf(" %d", &m);
+        }
+        if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
+        {
+            printf("Dzien wizyty: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 31)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+        else if (m == 2)
+        {
+            printf("Dzien wizyty: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 29)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+        else if (m == 4 || m == 6 || m == 9 || m == 11)
+        {
+            printf("Dzien wizyty: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 30)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+    }
+    else
+    {
+        printf("Miesiac wizyty: ");
+        scanf(" %d", &m);
+        while (m < 0 || m > 12)
+        {
+            printf("Bledne dane!\nMiesiac: ");
+            scanf(" %d", &m);
+        }
+        if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
+        {
+            printf("Dzien wizyty: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 31)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+        else if (m == 2)
+        {
+            printf("Dzien wizyty: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 28)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+        else if (m == 4 || m == 6 || m == 9 || m == 11)
+        {
+            printf("Dzien wizyty: ");
+            scanf(" %d", &d);
+            while (d < 0 || d > 30)
+            {
+                printf("Bledne dane!\nDzien: ");
+                scanf(" %d", &d);
+            }
+        }
+    }
     char id_l[5];
     printf("Lekarz (ID np. L001): ");
     scanf(" %4[^\n]%*c", id_l);
